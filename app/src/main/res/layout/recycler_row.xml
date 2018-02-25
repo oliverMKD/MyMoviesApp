@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageView
+        android:id="@+id/slikaFilm"
+        android:layout_width="match_parent"
+        android:layout_height="300dp" />
+    <RelativeLayout
+        android:layout_below="@+id/slikaFilm"
+        android:id="@+id/rel_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/kopceSrce"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginLeft="30dp"
+        android:background="@drawable/favourites_empty_mdpi"/>
+    <TextView
+        android:id="@+id/textNaslov"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginRight="5dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/kopceSrce"
+        />
+        <Button
+            android:id="@+id/kopceZvezda"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:layout_below="@+id/kopceSrce"
+            android:background="@drawable/rate_empty_mdpi"/>
+
+        <TextView
+            android:id="@+id/textRejting"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@+id/kopceZvezda"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/textNaslov"
+            />
+        <Button
+            android:id="@+id/kopceSave"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="30dp"
+            android:background="@drawable/watchlist_add_mdpi"
+            android:layout_below="@+id/kopceZvezda"/>
+        <TextView
+            android:id="@+id/textSave"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@+id/kopceZvezda"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/textRejting"
+            />
+    </RelativeLayout>
+
+</RelativeLayout>
