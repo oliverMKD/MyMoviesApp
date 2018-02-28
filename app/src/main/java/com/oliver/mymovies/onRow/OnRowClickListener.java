@@ -10,5 +10,6 @@ import com.oliver.mymovies.model.FilmModel;
 public interface OnRowClickListener {
     public void onRowClick(Film film, int position);
     public void onRatedClick(Film film, int id);
+    public void onWatchClick(Film film, int position);
 
 }

@@ -17,10 +17,12 @@ public class VPagerAdapter extends FragmentPagerAdapter {
 //    Zborovi zborovi = new Zborovi();
 
     ArrayList<Fragment> fragmenti = new ArrayList<Fragment>();
-    ArrayList<String> titles = new ArrayList<String>();
+    ArrayList<String> titles = new ArrayList<>();
 
-    public void dodadiFragment (Fragment fragment, String titles){
+    public void dodadiFragment (Fragment fragment, String titlovi){
         fragmenti.add(fragment);
+        titles.add(titlovi);
+
 
 
 
@@ -40,9 +42,9 @@ public class VPagerAdapter extends FragmentPagerAdapter {
         return fragmenti.size();
     }
 
-//    @Override
-//    public CharSequence getPageTitle(int position)
-//    {return titles.get(position);}
+    @Override
+    public CharSequence getPageTitle(int position)
+    {return titles.get(position);}
 
 
 

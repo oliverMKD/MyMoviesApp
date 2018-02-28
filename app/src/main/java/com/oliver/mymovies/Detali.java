@@ -15,8 +15,10 @@ import com.oliver.mymovies.adapteri.RecyclerViewAdapter;
 import com.oliver.mymovies.api.RestApi;
 import com.oliver.mymovies.klasi.Cast;
 import com.oliver.mymovies.klasi.Crew;
+import com.oliver.mymovies.klasi.Favorites;
 import com.oliver.mymovies.klasi.Film;
 import com.oliver.mymovies.model.FilmModel;
+import com.oliver.mymovies.sharedPrefferences.SharedPrefferences;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -44,12 +46,15 @@ public class Detali extends AppCompatActivity {
     Button ekipa;
     @BindView(R.id.textOpis)
     TextView opis;
+    @BindView(R.id.kopceSrce)
+    ImageView favo;
     RestApi api;
-    Film model;
-    int pozicija ;
+    public Film model = new Film();
+    int pozicija;
     Context context;
     Crew crew;
     Cast cast;
+    FilmModel filmModel;
 
 
     @Override
@@ -63,7 +68,9 @@ public class Detali extends AppCompatActivity {
             pozicija = intent.getIntExtra("details", 0);
             GetMovie(pozicija);
         }
+
     }
+
     public void GetMovie(int id) {
         RestApi api = new RestApi(this);
         Call<Film> call = api.getMovie(id, "credits");
@@ -73,6 +80,7 @@ public class Detali extends AppCompatActivity {
                 if (response.isSuccessful()) {
                     ArrayList<Crew> writers = new ArrayList<>();
                     ArrayList<Cast> stars = new ArrayList<>();
+                    EdenFavorit();
                     model = response.body();
                     if (model.overview != null) {
                         opis.setText(model.overview);
@@ -140,6 +148,7 @@ public class Detali extends AppCompatActivity {
 
                 }
             }
+
             @Override
             public void onFailure(Call<Film> call, Throwable t) {
             }
@@ -147,9 +156,61 @@ public class Detali extends AppCompatActivity {
     }
 
     @OnClick(R.id.kopceEkipa)
-    public void Klik(View view){
-        Intent intent2 = new Intent(this,FullCast.class);
-        intent2.putExtra("details",pozicija);
+    public void Klik(View view) {
+        Intent intent2 = new Intent(this, FullCast.class);
+        intent2.putExtra("details", pozicija);
         startActivity(intent2);
     }
+
+    @OnClick(R.id.kopceSrce)
+    public void klik(View view) {
+         api = new RestApi(this);
+        final Favorites favorites = new Favorites();
+        favorites.media_type = "movie";
+        favorites.media_id = model.id;
+        favorites.favorite = true;
+        final String aaa = SharedPrefferences.getSessionID(this);
+        Call<Film> call1 = api.postFavorites(aaa,"json/application",favorites);
+        call1.enqueue(new Callback<Film>() {
+            @Override
+            public void onResponse(Call<Film> call, Response<Film> response) {
+                model = response.body();
+
+                SharedPrefferences.addFavorites("favorites",context);
+                Toast.makeText(context, "uspesno favoriTI", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Film> call, Throwable t) {
+
+            }
+        });
+    }
+    public void EdenFavorit(){
+      RestApi  api3 = new RestApi(this);
+       final String aaa = SharedPrefferences.getSessionID(this);
+        Call<Film>call2 = api3.getFavorit(pozicija,aaa);
+        call2.enqueue(new Callback<Film>() {
+            @Override
+            public void onResponse(Call<Film> call, Response<Film> response) {
+                model = response.body();
+                if (model.favorite == true) {
+                    Picasso.with(Detali.this).load("@mipmap/favourites_full_mdpi").centerInside().fit().into(favo);
+                    Toast.makeText(context, "uspesno ", Toast.LENGTH_SHORT).show();
+                } else {
+                    Picasso.with(context).load("@mipmap/favourites_empty_mdpi").centerInside().fit().into(favo);
+                    Toast.makeText(context, "Ne se dodade", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<Film> call, Throwable t) {
+                Toast.makeText(context, "padna favorit", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+    }
+
 }

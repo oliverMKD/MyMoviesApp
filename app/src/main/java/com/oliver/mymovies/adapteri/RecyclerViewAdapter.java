@@ -98,6 +98,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         });
 
+        holder.kopcesave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRowClickListener.onWatchClick(film2,film2.id);
+            }
+        });
+
     }
 
     @Override
@@ -108,8 +115,6 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.slikaFilm)
         ImageView film;
-        @BindView(R.id.kopceSrce)
-        Button srce;
         @BindView(R.id.kopceZvezda)
         Button zvezda;
         @BindView(R.id.kopceSave)

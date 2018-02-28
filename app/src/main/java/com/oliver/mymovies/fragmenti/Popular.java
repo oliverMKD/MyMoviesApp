@@ -18,8 +18,10 @@ import android.widget.Toast;
 import com.oliver.mymovies.Detali;
 import com.oliver.mymovies.Home;
 import com.oliver.mymovies.R;
+import com.oliver.mymovies.Watchlist;
 import com.oliver.mymovies.adapteri.RecyclerViewAdapter;
 import com.oliver.mymovies.api.RestApi;
+import com.oliver.mymovies.klasi.Favorites;
 import com.oliver.mymovies.klasi.Film;
 import com.oliver.mymovies.klasi.Rated;
 import com.oliver.mymovies.klasi.User;
@@ -52,8 +54,9 @@ public class Popular extends android.support.v4.app.Fragment {
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeContainer;
     ProgressBar pd;
-    Film film;
-    String film1;
+    public Film film = new Film();
+
+
 
     @Nullable
     @Override
@@ -105,9 +108,37 @@ public class Popular extends android.support.v4.app.Fragment {
                             public void onResponse(Call<Film> call, Response<Film> response) {
                                 if (response.isSuccessful()) {
                                     Film film = response.body();
+                                    Toast.makeText(getActivity(), "uspesno rated", Toast.LENGTH_SHORT).show();
                                     SharedPrefferences.addRated("rated", getActivity());
                                 }else if (response.code()==400){
                                     Toast.makeText(getActivity(), "greska", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<Film> call, Throwable t) {
+
+                            }
+                        });
+                    }
+
+                    @Override
+                    public void onWatchClick(final Film model, int id) {
+                        String aaa = SharedPrefferences.getSessionID(getActivity());
+                        api = new RestApi(getActivity());
+                        final com.oliver.mymovies.klasi.Watchlist watchlist = new com.oliver.mymovies.klasi.Watchlist();
+                        watchlist.media_type = "movie";
+                        watchlist.media_id =model.id;
+                        watchlist.watchlist = true;
+                        Call<Film>call1 = api.postWatch(film.id,aaa,"json/application",watchlist);
+                        call1.enqueue(new Callback<Film>() {
+                            @Override
+                            public void onResponse(Call<Film> call, Response<Film> response) {
+                                if (response.isSuccessful()) {
+
+                                    film = response.body();
+                                    SharedPrefferences.addWatch("watch", getActivity());
+                                    Toast.makeText(getActivity(), "uspesno watch", Toast.LENGTH_SHORT).show();
                                 }
                             }
 

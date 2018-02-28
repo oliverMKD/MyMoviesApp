@@ -50,7 +50,7 @@ public class TopRated extends Fragment {
     @BindView(R.id.swipe_refresh_layout)
     SwipeRefreshLayout swipeContainer;
     ProgressBar pd;
-    Film film;
+    public Film film = new Film();
 
 
     @Nullable
@@ -101,9 +101,36 @@ public class TopRated extends Fragment {
                                     if (response.isSuccessful()) {
                                         final Film film;
                                         film = response.body();
+                                        Toast.makeText(getActivity(), "uspesno rated", Toast.LENGTH_SHORT).show();
                                         SharedPrefferences.addRated("rated", getActivity());
                                     }else if (response.code()==400){
                                         Toast.makeText(getActivity(), "greska", Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+
+                                @Override
+                                public void onFailure(Call<Film> call, Throwable t) {
+
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onWatchClick(final Film model, int id) {
+                            String aaa = SharedPrefferences.getSessionID(getActivity());
+                            api = new RestApi(getActivity());
+                            final com.oliver.mymovies.klasi.Watchlist watchlist = new com.oliver.mymovies.klasi.Watchlist();
+                            watchlist.media_type = "movie";
+                            watchlist.media_id =model.id;
+                            watchlist.watchlist = true;
+                            Call<Film>call1 = api.postWatch(film.id,aaa,"json/application",watchlist);
+                            call1.enqueue(new Callback<Film>() {
+                                @Override
+                                public void onResponse(Call<Film> call, Response<Film> response) {
+                                    if (response.isSuccessful()) {
+                                       film = response.body();
+                                        SharedPrefferences.addWatch("watch", getActivity());
+                                        Toast.makeText(getActivity(), "uspesno watch", Toast.LENGTH_SHORT).show();
                                     }
                                 }
 

@@ -17,15 +17,23 @@
             android:layout_height="250dp"
             android:id="@+id/slika_detali">
         </ImageView>
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/kopceSrce"
+            android:layout_below="@+id/slika_detali"
+            android:background="@drawable/favourites_empty_mdpi"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/slika_detali"
+            android:layout_toRightOf="@+id/kopceSrce"
             android:id="@+id/textReziser"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textReziser"
+            android:layout_toRightOf="@+id/kopceSrce"
             android:id="@+id/textScenario"/>
         <TextView
             android:layout_width="match_parent"
@@ -40,6 +48,13 @@
             android:layout_below="@+id/textSvezdi"
             android:background="@color/colorAccent"
             android:text="see full cast"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/kopceLink"
+            android:layout_below="@+id/kopceEkipa"
+            android:text="Trailer"
+            android:background="@color/colorAccent"/>
         <TextView
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"

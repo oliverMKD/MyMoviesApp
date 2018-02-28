@@ -1,4 +1,6 @@
 package com.oliver.mymovies.api;
+import com.oliver.mymovies.Watchlist;
+import com.oliver.mymovies.klasi.Favorites;
 import com.oliver.mymovies.klasi.Film;
 import com.oliver.mymovies.klasi.Rated;
 import com.oliver.mymovies.klasi.Token;
@@ -45,12 +47,36 @@ public interface ApiService {
     @GET("authentication/session/new?"+ApiConstants.api_key)
     Call<Token> getSESION(@Query("request_token") String request_token);
 
+//    RATED E DOBRO I POST I GET !!!!!
     @POST("movie/{movie_id}/rating?" + ApiConstants.api_key)
-    Call<Film> postUserRating(@Path("movie_id") int movie_id, @Query("session_id") String session_id, @Header("json/application") String json, @Body Rated body);
+    Call<Film> postUserRating( @Path("movie_id") int movie_id,@Query("session_id") String session_id, @Header("json/application") String json, @Body Rated body);
 
-    @GET("account/{account_id}/rated/movies?" + ApiConstants.api_key)
+    @GET("account/account_id/rated/movies?" + ApiConstants.api_key)
     Call<FilmModel> getRated(@Query("session_id") String session_id);
+//    /////////////////////////////////////////////////////////////////////////
+
+//        FAVORITES SE DOBRI TRITE
+    @GET("account/account_id/favorite/movies?" + ApiConstants.api_key)
+    Call<FilmModel> getFavorites (@Query ("session_id") String sessionId) ;
+
+    @POST("account/account_id/favorite?" + ApiConstants.api_key)
+    Call<Film> postFavorites(@Query("session_id") String session_id, @Header("json/application") String json, @Body Favorites body);
+
+    ///////////////////////////////////////////////////////////////////////////////////////////
 
 
+    @GET(" movie/{movie_id}/account_states?" + ApiConstants.api_key)
+    Call<Film> getFavorit (@Path("movie_id") int id, @Query("session_id") String sessionId);
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+    @POST("account/{account_id}/watchlist?" + ApiConstants.api_key)
+    Call<Film> postWatch(@Path("account_id") int account_id,@Query("session_id") String session_id, @Header("json/application") String json, @Body com.oliver.mymovies.klasi.Watchlist body);
+
+    @GET("account/account_id/watchlist/movies?" + ApiConstants.api_key)
+    Call<FilmModel> getWatch (@Query ("session_id") String sessionId) ;
 }
+
+//    @Path("movie_id") int movie_id,

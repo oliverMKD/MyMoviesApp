@@ -24,7 +24,7 @@ public class Rated extends AppCompatActivity {
     @BindView(R.id.MyRV)
     RecyclerView rv;
     RecyclerViewAdapter adapter;
-    FilmModel model = new FilmModel();
+    public FilmModel model = new FilmModel();
     User user;
     RestApi api;
     Film film;
@@ -37,7 +37,7 @@ public class Rated extends AppCompatActivity {
         ButterKnife.bind(this);
         context = this;
         api = new RestApi(this);
-        String aaa = SharedPrefferences.getSessionID(this);
+        final String aaa = SharedPrefferences.getSessionID(this);
         Call<FilmModel>call=api.getRated(aaa);
         call.enqueue(new Callback<FilmModel>() {
             @Override
@@ -52,6 +52,11 @@ public class Rated extends AppCompatActivity {
 
                         @Override
                         public void onRatedClick(Film film, int id) {
+
+                        }
+
+                        @Override
+                        public void onWatchClick(Film film, int id) {
 
                         }
                     });

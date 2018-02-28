@@ -60,4 +60,20 @@ public class SharedPrefferences {
 
         return getPreferences(c).getString("rated", "");
     }
+    public static void addFavorites (String favo, Context c)  {
+
+        getPreferences(c).edit().putString("favorites", favo).apply();
+    }
+    public static  String getFavorites (Context c) {
+
+        return getPreferences(c).getString("favorites", "");
+    }
+    public static void addWatch (String watch, Context c)  {
+
+        getPreferences(c).edit().putString("watch", watch).apply();
+    }
+    public static  String getWatch (Context c) {
+
+        return getPreferences(c).getString("watch", "");
+    }
 }

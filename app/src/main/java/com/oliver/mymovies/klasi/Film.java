@@ -12,6 +12,10 @@ public class Film implements Serializable {
 
 
     public int id;
+    public boolean favorite;
+    public boolean watchlist;
+
+
 
     @SerializedName("original_title")
     private String originalTitle;
@@ -46,6 +50,9 @@ public class Film implements Serializable {
 
     public String getPosterPath(){
         return "http://image.tmdb.org/t/p/w185" + posterPath;
+    }
+
+    public Film() {
     }
 
     public Film(int id, String originalTitle, String overview, String releaseDate, double popularity, String title, double averageVote, long voteCount, String backdropPath, String baseImageUrl) {

@@ -4,7 +4,9 @@ import android.content.Context;
 
 
 import com.oliver.mymovies.BuildConfig;
+import com.oliver.mymovies.Watchlist;
 import com.oliver.mymovies.interceptor.LoggingInterceptor;
+import com.oliver.mymovies.klasi.Favorites;
 import com.oliver.mymovies.klasi.Film;
 import com.oliver.mymovies.klasi.Rated;
 import com.oliver.mymovies.klasi.Token;
@@ -81,9 +83,33 @@ public class RestApi {
     public Call<Token>getSESION(String request_token) {
         return request().getSESION(request_token);
     }
+
     public Call<Film> postUserRating(int movie_id, String session_id, String json, Rated rated){
         return request().postUserRating(movie_id,session_id,json,rated);}
+
+
     public Call<FilmModel> getRated( String session_id){
         return request().getRated(session_id);}
+
+    public Call<FilmModel> getFavorites(String sessionId) {
+
+        return request().getFavorites( sessionId);
+    }
+
+    public Call<Film> postFavorites(String session_id, String json, Favorites body){
+        return request().postFavorites(session_id,json,body);}
+
+    public Call<Film> getFavorit(int id,String sessionId)
+    {
+        return request().getFavorit(id,sessionId);
+    }
+    public Call<FilmModel> getWatch(String sessionId) {
+
+        return request().getWatch( sessionId);
+    }
+    public Call<Film> postWatch(int account_id,String session_id, String json, com.oliver.mymovies.klasi.Watchlist body){
+        return request().postWatch(account_id,session_id,json,body);}
+
+
 
 }
