@@ -13,6 +13,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,7 +23,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.oliver.mymovies.adapteri.RecyclerViewAdapter;
@@ -56,6 +60,8 @@ public class Home extends AppCompatActivity
     Context context;
     FilmModel model;
     ArrayList<Film> results;
+    @BindView(R.id.editSearch)
+    EditText search;
 
     ProgressDialog pd;
     public static final String LOG_TAG=RecyclerViewAdapter.class.getName();
@@ -77,7 +83,16 @@ public class Home extends AppCompatActivity
         adapter.dodadiFragment(new NowPlaying(),"NOW PLAYING");
         vPage.setAdapter(adapter);
 
-
+        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId== EditorInfo.IME_ACTION_SEARCH){
+                    preformSearch();
+                    return true;
+                }
+                return false;
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,6 +103,7 @@ public class Home extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
     }
+
 
     @Override
     public void onBackPressed() {
@@ -171,6 +187,9 @@ public class Home extends AppCompatActivity
                 return (Activity)context;
             }context=((ContextWrapper)context).getBaseContext();
         }return null;
+    }
+    public void preformSearch(){
+
     }
 
 }

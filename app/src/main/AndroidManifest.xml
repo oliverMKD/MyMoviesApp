@@ -30,7 +30,9 @@
         <activity android:name=".Watchlist" />
         <activity android:name=".People" />
         <activity android:name=".Detali" />
-        <activity android:name=".FullCast"></activity>
+        <activity android:name=".FullCast" />
+        <activity android:name=".SearchActivity" />
+        <activity android:name=".VideoActivity"></activity>
     </application>
 
 </manifest>

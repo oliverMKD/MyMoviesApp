@@ -76,4 +76,24 @@ public class SharedPrefferences {
 
         return getPreferences(c).getString("watch", "");
     }
+
+    public static void addKeyID (String key, Context c)  {
+
+        getPreferences(c).edit().putString("key", key).apply();
+    }
+
+    public static  String getKeyID (Context c) {
+
+        return getPreferences(c).getString("key", "");
+    }
+
+    public static void addID (String id, Context c)  {
+
+        getPreferences(c).edit().putString("id", id).apply();
+    }
+
+    public static  String getID (Context c) {
+
+        return getPreferences(c).getString("id", "");
+    }
 }

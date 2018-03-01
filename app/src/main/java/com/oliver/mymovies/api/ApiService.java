@@ -7,6 +7,7 @@ import com.oliver.mymovies.klasi.Token;
 import com.oliver.mymovies.klasi.User;
 import com.oliver.mymovies.model.FilmModel;
 import com.oliver.mymovies.model.PeopleModel;
+import com.oliver.mymovies.model.VideoModel;
 
 import java.util.ArrayList;
 
@@ -77,6 +78,12 @@ public interface ApiService {
 
     @GET("account/account_id/watchlist/movies?" + ApiConstants.api_key)
     Call<FilmModel> getWatch (@Query ("session_id") String sessionId) ;
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    @GET("movie/{movie_id}/videos?" + ApiConstants.api_key)
+    Call<VideoModel> getVideo(@Path("movie_id") int pozicija);
 }
 
-//    @Path("movie_id") int movie_id,
+//movie/{movie_id}/videos

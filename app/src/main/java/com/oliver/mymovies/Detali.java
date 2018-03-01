@@ -2,6 +2,7 @@ package com.oliver.mymovies;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -17,7 +18,9 @@ import com.oliver.mymovies.klasi.Cast;
 import com.oliver.mymovies.klasi.Crew;
 import com.oliver.mymovies.klasi.Favorites;
 import com.oliver.mymovies.klasi.Film;
+import com.oliver.mymovies.klasi.Video;
 import com.oliver.mymovies.model.FilmModel;
+import com.oliver.mymovies.model.VideoModel;
 import com.oliver.mymovies.sharedPrefferences.SharedPrefferences;
 import com.squareup.picasso.Picasso;
 
@@ -50,11 +53,15 @@ public class Detali extends AppCompatActivity {
     ImageView favo;
     RestApi api;
     public Film model = new Film();
+    public VideoModel videoModel = new VideoModel();
+    public Video video = new Video();
     int pozicija;
     Context context;
     Crew crew;
     Cast cast;
     FilmModel filmModel;
+    @BindView(R.id.kopceLink)
+    Button link;
 
 
     @Override
@@ -211,6 +218,45 @@ public class Detali extends AppCompatActivity {
             }
         });
 
+    }
+
+    @OnClick(R.id.kopceLink)
+    public void Klik2(View view){
+        api = new RestApi(context);
+        final Call<VideoModel> videoModelCall = api.getVideo(model.id);
+        videoModelCall.enqueue(new Callback<VideoModel>() {
+            @Override
+            public void onResponse(Call<VideoModel> call, Response<VideoModel> response) {
+                if (response.isSuccessful()){
+//
+                    videoModel = response.body();
+                    video=videoModel.results.get(0);
+//
+
+
+                    Intent intent = new Intent(Intent.ACTION_VIEW);
+                    intent.setData(Uri.parse("https://www.youtube.com/watch?v=" +video.key));
+
+                    startActivity(intent);
+
+
+
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<VideoModel> call, Throwable t) {
+
+            }
+        });
+
+
+
+
+//        Intent trejler = new Intent(this,VideoActivity.class);
+//        trejler.putExtra("video",model.id);
+//        startActivity(trejler);
     }
 
 }
