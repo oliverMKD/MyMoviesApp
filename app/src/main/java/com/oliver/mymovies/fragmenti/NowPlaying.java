@@ -88,18 +88,20 @@ public class NowPlaying extends Fragment {
                         }
 
                         @Override
-                        public void onRatedClick(Film film, int id) {
+                        public void onRatedClick(Film modelj, int id) {
                             api = new RestApi(getActivity());
             final Rated rated = new Rated();
+            film = new Film();
             rated.value=5;
+            rated.id=film.id;
             String aaa = SharedPrefferences.getSessionID(getActivity());
-            Call<Film> call = api.postUserRating(film.id,aaa,"json/application",rated);
+            Call<Film> call = api.postUserRating(modelj.id,aaa,"json/application",rated);
             call.enqueue(new Callback<Film>() {
                 @Override
                 public void onResponse(Call<Film> call, Response<Film> response) {
                     if (response.isSuccessful()) {
-                        final Film film;
-                        film = response.body();
+                        final Film film1;
+                        film1 = response.body();
                         Toast.makeText(getActivity(), "uspesno Rated", Toast.LENGTH_SHORT).show();
 //                        SharedPrefferences.addRated("rated", getActivity());
                     }else if (response.code()==400){

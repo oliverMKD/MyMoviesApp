@@ -14,6 +14,7 @@ public class Film implements Serializable {
     public int id;
     public boolean favorite;
     public boolean watchlist;
+    public transient boolean rated;
 
 
 

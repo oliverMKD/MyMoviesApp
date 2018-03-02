@@ -23,13 +23,13 @@
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/kopceSrce"
         />
-        <Button
-            android:id="@+id/kopceZvezda"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="30dp"
-            android:layout_below="@+id/textNaslov"
-            android:background="@drawable/rate_empty_mdpi"/>
+        <!--<Button-->
+            <!--android:id="@+id/kopceZvezda"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_marginLeft="30dp"-->
+            <!--android:layout_below="@+id/textNaslov"-->
+            <!--android:background="@drawable/rate_empty_mdpi"/>-->
 
         <TextView
             android:id="@+id/textRejting"
@@ -40,13 +40,13 @@
             android:layout_marginLeft="10dp"
             android:layout_below="@+id/textNaslov"
             />
-        <Button
-            android:id="@+id/kopceSave"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="30dp"
-            android:background="@drawable/watchlist_add_mdpi"
-            android:layout_below="@+id/kopceZvezda"/>
+        <!--<Button-->
+            <!--android:id="@+id/kopceSave"-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:layout_marginLeft="30dp"-->
+            <!--android:background="@drawable/watchlist_add_mdpi"-->
+            <!--android:layout_below="@+id/kopceZvezda"/>-->
         <TextView
             android:id="@+id/textSave"
             android:layout_width="match_parent"

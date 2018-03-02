@@ -29,5 +29,14 @@
         android:layout_centerInParent="true"
         android:background="@color/colorAccent"
         android:text="LOGIN"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="LOG IN AS GEST !!!"
+        android:textAlignment="center"
+        android:clickable="true"
+        android:layout_marginTop="20dp"
+        android:id="@+id/textGostin"
+        android:layout_below="@+id/kopceLogIn"/>
 
 </RelativeLayout>

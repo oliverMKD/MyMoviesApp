@@ -74,9 +74,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public void onBindViewHolder(RecyclerViewAdapter.ViewHolder holder, final int position) {
 
        final Film film2 = modelfilms.results.get(position);
-        holder.naslov.setText(modelfilms.results.get(position).getOriginalTitle());
+        holder.naslov.setText("Title : " +modelfilms.results.get(position).getOriginalTitle());
         String vote = Double.toString(modelfilms.results.get(position).getAverageVote());
-        holder.rejting.setText(vote);
+        holder.rejting.setText("Rating :" +vote);
         String image_url = modelfilms.results.get(position).getPosterPath();
         Picasso.with(mContext).load(image_url).fit().centerCrop().into(holder.film);
 
@@ -90,20 +90,20 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             }
         });
 
-        holder.zvezda.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRowClickListener.onRatedClick(film2,film2.id);
+//        holder.zvezda.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onRowClickListener.onRatedClick(film2,film2.id);
+////
+//            }
+//        });
 //
-            }
-        });
-
-        holder.kopcesave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onRowClickListener.onWatchClick(film2,film2.id);
-            }
-        });
+//        holder.kopcesave.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                onRowClickListener.onWatchClick(film2,film2.id);
+//            }
+//        });
 
     }
 
@@ -115,10 +115,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.slikaFilm)
         ImageView film;
-        @BindView(R.id.kopceZvezda)
-        Button zvezda;
-        @BindView(R.id.kopceSave)
-        Button kopcesave;
+//        @BindView(R.id.kopceZvezda)
+//        Button zvezda;
+//        @BindView(R.id.kopceSave)
+//        Button kopcesave;
         @BindView(R.id.textNaslov)
         TextView naslov;
         @BindView(R.id.textRejting)

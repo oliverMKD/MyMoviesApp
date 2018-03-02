@@ -11,6 +11,8 @@ public class Rated {
     @SerializedName("value")
     public int value;
 
+    public int id;
+
     public int getValue() {
         return value;
     }

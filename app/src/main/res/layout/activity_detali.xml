@@ -2,16 +2,23 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/plava6"
+    >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <TextView
+            android:layout_centerHorizontal="true"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textAllCaps="true"
             android:id="@+id/textGore"/>
 
         <ImageView
+            android:layout_below="@+id/textGore"
             android:layout_marginTop="30dp"
             android:layout_width="match_parent"
             android:layout_height="250dp"
@@ -23,17 +30,29 @@
             android:id="@+id/kopceSrce"
             android:layout_below="@+id/slika_detali"
             android:background="@drawable/favourites_empty_mdpi"/>
+        <!--<ImageView-->
+            <!--android:layout_width="40dp"-->
+            <!--android:layout_height="40dp"-->
+            <!--android:id="@+id/kopceZvezda"-->
+            <!--android:layout_toRightOf="@+id/kopceSave"-->
+            <!--android:layout_below="@+id/slika_detali"-->
+            <!--android:background="@drawable/rate_empty_mdpi"/>-->
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/kopceSave"
+            android:layout_toRightOf="@+id/kopceSrce"
+            android:layout_below="@+id/slika_detali"
+            android:background="@drawable/watchlist_add_mdpi"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/slika_detali"
-            android:layout_toRightOf="@+id/kopceSrce"
+            android:layout_below="@+id/kopceSrce"
             android:id="@+id/textReziser"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textReziser"
-            android:layout_toRightOf="@+id/kopceSrce"
             android:id="@+id/textScenario"/>
         <TextView
             android:layout_width="match_parent"
@@ -59,7 +78,7 @@
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/kopceEkipa"
+            android:layout_below="@+id/kopceLink"
             android:id="@+id/textOpis"/>
     </RelativeLayout>
 

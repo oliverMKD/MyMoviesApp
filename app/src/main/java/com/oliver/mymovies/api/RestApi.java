@@ -132,4 +132,8 @@ public class RestApi {
         return request().getVideo(id);
 
     }
+    public Call<FilmModel> getSearchMovie(String query) {
+
+        return request().getSearchMovie(query);
+    }
 }

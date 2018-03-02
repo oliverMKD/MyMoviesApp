@@ -84,6 +84,12 @@ public interface ApiService {
 
     @GET("movie/{movie_id}/videos?" + ApiConstants.api_key)
     Call<VideoModel> getVideo(@Path("movie_id") int pozicija);
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////
+    @GET("search/movie?" + ApiConstants.api_key)
+    Call<FilmModel> getSearchMovie (@Query ("query") String query) ;
+
+
+
 }
 
-//movie/{movie_id}/videos

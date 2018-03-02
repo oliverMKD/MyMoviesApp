@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -39,6 +40,7 @@ import com.oliver.mymovies.fragmenti.Upcoming;
 import com.oliver.mymovies.klasi.Film;
 import com.oliver.mymovies.model.FilmModel;
 import com.oliver.mymovies.onRow.OnRowClickListener;
+import com.oliver.mymovies.sharedPrefferences.SharedPrefferences;
 //import com.oliver.mymovies.fragmenti.Popular;
 
 import java.util.ArrayList;
@@ -63,6 +65,7 @@ public class Home extends AppCompatActivity
     @BindView(R.id.editSearch)
     EditText search;
 
+
     ProgressDialog pd;
     public static final String LOG_TAG=RecyclerViewAdapter.class.getName();
 
@@ -83,16 +86,6 @@ public class Home extends AppCompatActivity
         adapter.dodadiFragment(new NowPlaying(),"NOW PLAYING");
         vPage.setAdapter(adapter);
 
-        search.setOnEditorActionListener(new TextView.OnEditorActionListener() {
-            @Override
-            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-                if (actionId== EditorInfo.IME_ACTION_SEARCH){
-                    preformSearch();
-                    return true;
-                }
-                return false;
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -164,9 +157,13 @@ public class Home extends AppCompatActivity
 //            drawer.closeDrawers();
 
         } else if (id == R.id.nav_login) {
+            SharedPreferences preferences = getSharedPreferences("MySharedPreffsFile",Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = preferences.edit();
+            editor.clear();
+            editor.commit();
             Intent intent = new Intent(this,LogIn.class);
             startActivity(intent);
-//            drawer.closeDrawers();
+
 
         }
 
@@ -187,9 +184,6 @@ public class Home extends AppCompatActivity
                 return (Activity)context;
             }context=((ContextWrapper)context).getBaseContext();
         }return null;
-    }
-    public void preformSearch(){
-
     }
 
 }

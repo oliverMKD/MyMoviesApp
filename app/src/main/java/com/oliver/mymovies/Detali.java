@@ -14,11 +14,7 @@ import android.widget.Toast;
 
 import com.oliver.mymovies.adapteri.RecyclerViewAdapter;
 import com.oliver.mymovies.api.RestApi;
-import com.oliver.mymovies.klasi.Cast;
-import com.oliver.mymovies.klasi.Crew;
-import com.oliver.mymovies.klasi.Favorites;
-import com.oliver.mymovies.klasi.Film;
-import com.oliver.mymovies.klasi.Video;
+import com.oliver.mymovies.klasi.*;
 import com.oliver.mymovies.model.FilmModel;
 import com.oliver.mymovies.model.VideoModel;
 import com.oliver.mymovies.sharedPrefferences.SharedPrefferences;
@@ -62,6 +58,11 @@ public class Detali extends AppCompatActivity {
     FilmModel filmModel;
     @BindView(R.id.kopceLink)
     Button link;
+//    @BindView(R.id.kopceZvezda)
+//    ImageView rating;
+    @BindView(R.id.kopceSave)
+    ImageView watch;
+    com.oliver.mymovies.klasi.Rated rated = new com.oliver.mymovies.klasi.Rated();
 
 
     @Override
@@ -76,7 +77,25 @@ public class Detali extends AppCompatActivity {
             GetMovie(pozicija);
         }
 
+
+
     }
+
+
+//             @OnClick(R.id.kopceZvezda)
+//                     public void klik5 (View v) {
+//        onRatedClick();
+//
+//    }
+
+    @OnClick(R.id.kopceSave)
+    public void klik6 (View v) {
+
+        onWatchClick();
+    }
+
+
+
 
     public void GetMovie(int id) {
         RestApi api = new RestApi(this);
@@ -104,21 +123,21 @@ public class Detali extends AppCompatActivity {
                         if (crew.department.equals("Writing")) {
                             writers.add(crew);
                         } else {
-                            textNaslov.setText("");
+                            scenario.setText("");
                         }
                     }
                     if (writers.size() == 1) {
                         crew = writers.get(0);
-                        textNaslov.setText(crew.name);
+                        scenario.setText(crew.name);
                     } else if (writers.size() > 1) {
                         for (int i = 0; i < 2; i++) {
                             crew = writers.get(i);
                             if (writers.size() > 0) {
-                                textNaslov.setText(textNaslov.getText().toString() + crew.name + ", ");
+                                scenario.setText(scenario.getText().toString() + crew.name + ", ");
                             }
                         }
                     }
-                    textNaslov.setText("Writers: " + textNaslov.getText().toString());
+                    scenario.setText("Writers: " + scenario.getText().toString());
                     if (model.credits.cast.size() >= 3) {
                         for (int i = 0; i < 3; i++) {
                             cast = model.credits.cast.get(i);
@@ -149,7 +168,7 @@ public class Detali extends AppCompatActivity {
                     } else {
                         svezdi.setText("Stars: ");
                     }
-
+                        textNaslov.setText("Title :"+model.getOriginalTitle());
                     String image_url = model.getPosterPath();
                     Picasso.with(context).load(image_url).fit().centerCrop().into(slika);
 
@@ -171,20 +190,27 @@ public class Detali extends AppCompatActivity {
 
     @OnClick(R.id.kopceSrce)
     public void klik(View view) {
-         api = new RestApi(this);
+        api = new RestApi(this);
         final Favorites favorites = new Favorites();
         favorites.media_type = "movie";
         favorites.media_id = model.id;
         favorites.favorite = true;
         final String aaa = SharedPrefferences.getSessionID(this);
-        Call<Film> call1 = api.postFavorites(aaa,"json/application",favorites);
+        Call<Film> call1 = api.postFavorites(aaa, "json/application", favorites);
         call1.enqueue(new Callback<Film>() {
             @Override
             public void onResponse(Call<Film> call, Response<Film> response) {
-                model = response.body();
+                if (response.isSuccessful()){
+                    Film film = new Film();
+                    film = response.body();
+                    Picasso.with(context).load(R.drawable.favourites_full_mdpi).fit().centerCrop().into(favo);
+                    favo.setClickable(false);
+                    SharedPrefferences.addFavorites("favorites", context);
+                    Toast.makeText(context, "added to favoriTI", Toast.LENGTH_SHORT).show();
+                } else if (response.code()==401){
+                    Toast.makeText(context, "Please Log In", Toast.LENGTH_SHORT).show();
+                }
 
-                SharedPrefferences.addFavorites("favorites",context);
-                Toast.makeText(context, "uspesno favoriTI", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -193,20 +219,33 @@ public class Detali extends AppCompatActivity {
             }
         });
     }
-    public void EdenFavorit(){
-      RestApi  api3 = new RestApi(this);
-       final String aaa = SharedPrefferences.getSessionID(this);
-        Call<Film>call2 = api3.getFavorit(pozicija,aaa);
+
+    public void EdenFavorit() {
+        RestApi api3 = new RestApi(this);
+        final String aaa = SharedPrefferences.getSessionID(this);
+        Call<Film> call2 = api3.getFavorit(pozicija, aaa);
         call2.enqueue(new Callback<Film>() {
             @Override
             public void onResponse(Call<Film> call, Response<Film> response) {
-                model = response.body();
-                if (model.favorite == true) {
-                    Picasso.with(Detali.this).load("@mipmap/favourites_full_mdpi").centerInside().fit().into(favo);
-                    Toast.makeText(context, "uspesno ", Toast.LENGTH_SHORT).show();
-                } else {
-                    Picasso.with(context).load("@mipmap/favourites_empty_mdpi").centerInside().fit().into(favo);
-                    Toast.makeText(context, "Ne se dodade", Toast.LENGTH_SHORT).show();
+                if (response.isSuccessful()){
+                    model = response.body();
+
+                    if (model.favorite==true){
+                        Picasso.with(context).load(R.drawable.favourites_full_mdpi).fit().centerCrop().into(favo);
+                        favo.setClickable(false);
+                    } if (model.watchlist==true){
+                        Picasso.with(context).load(R.drawable.watchlist_remove_mdpi).fit().centerCrop().into(watch);
+                        watch.setClickable(false);
+//                        rating.setVisibility(View.INVISIBLE);
+//                        rating.setClickable(false);
+                    }
+
+//                    final int value = rated.value;
+//                    if (value==model.id){
+//                       rating.setVisibility(View.INVISIBLE);
+//                    }
+                }else if (response.code()==401){
+                    Toast.makeText(context, "please log in !", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -221,26 +260,25 @@ public class Detali extends AppCompatActivity {
     }
 
     @OnClick(R.id.kopceLink)
-    public void Klik2(View view){
+    public void Klik2(View view) {
         api = new RestApi(context);
         final Call<VideoModel> videoModelCall = api.getVideo(model.id);
         videoModelCall.enqueue(new Callback<VideoModel>() {
             @Override
             public void onResponse(Call<VideoModel> call, Response<VideoModel> response) {
-                if (response.isSuccessful()){
-//
+                if (response.isSuccessful()) {
                     videoModel = response.body();
-                    video=videoModel.results.get(0);
-//
-
-
+                    video = videoModel.results.get(0);
+                    if (video==null){
+                        video=videoModel.results.get(1);
+                    } else if (video==null){
+                        video=videoModel.results.get(2);
+                    }else if (response.code()==401){
+                        Toast.makeText(context, "Please log in", Toast.LENGTH_SHORT).show();
+                    }
                     Intent intent = new Intent(Intent.ACTION_VIEW);
-                    intent.setData(Uri.parse("https://www.youtube.com/watch?v=" +video.key));
-
+                    intent.setData(Uri.parse("https://www.youtube.com/watch?v=" + video.key));
                     startActivity(intent);
-
-
-
 
                 }
             }
@@ -250,13 +288,65 @@ public class Detali extends AppCompatActivity {
 
             }
         });
-
-
-
-
-//        Intent trejler = new Intent(this,VideoActivity.class);
-//        trejler.putExtra("video",model.id);
-//        startActivity(trejler);
     }
 
+//    public void onRatedClick() {
+//        api = new RestApi(context);
+//        final com.oliver.mymovies.klasi.Rated rated = new com.oliver.mymovies.klasi.Rated();
+//        rated.value = 5;
+////        rated.id=model.id;
+//        String aaa = SharedPrefferences.getSessionID(context);
+//        Call<Film> call = api.postUserRating(model.id, aaa, "json/application", rated);
+//        call.enqueue(new Callback<Film>() {
+//            @Override
+//            public void onResponse(Call<Film> call, Response<Film> response) {
+//                if (response.isSuccessful()) {
+//                    Film model1 = new Film();
+//                    model1 = response.body();
+//                    Toast.makeText(context, "added to Rated", Toast.LENGTH_SHORT).show();
+//                    rating.setClickable(false);
+//                    rating.setVisibility(View.INVISIBLE);
+////                        SharedPrefferences.addRated("rated", getActivity());
+//                } else if (response.code() == 401) {
+//                    Toast.makeText(context, "please log in !", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Film> call, Throwable t) {
+//                Toast.makeText(Detali.this, "neuspesno rated", Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//
+//    }
+
+    public void onWatchClick() {
+        String aaa = SharedPrefferences.getSessionID(context);
+        api = new RestApi(context);
+        final com.oliver.mymovies.klasi.Watchlist watchlist = new com.oliver.mymovies.klasi.Watchlist();
+        watchlist.media_type = "movie";
+        watchlist.media_id = model.id;
+        watchlist.watchlist = true;
+        Call<Film>call1 = api.postWatch(model.id,aaa,"json/application",watchlist);
+        call1.enqueue(new Callback<Film>() {
+            @Override
+            public void onResponse(Call<Film> call, Response<Film> response) {
+                if (response.isSuccessful()){
+                    Film model2 = new Film();
+                    model2 = response.body();
+                    Picasso.with(context).load(R.drawable.watchlist_remove_mdpi).fit().centerCrop().into(watch);
+                    watch.setClickable(false);
+                    SharedPrefferences.addWatch("watch", context);
+                    Toast.makeText(context, "added to watchlist!", Toast.LENGTH_SHORT).show();
+                } else if (response.code()==401){
+                    Toast.makeText(context, "please log in !", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Film> call, Throwable t) {
+
+            }
+        });
+    }
 }
