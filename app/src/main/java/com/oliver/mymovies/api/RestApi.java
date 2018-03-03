@@ -136,4 +136,6 @@ public class RestApi {
 
         return request().getSearchMovie(query);
     }
+    public Call<FilmModel> getUserFavorites(String account_id,String session_id)
+    {return request().getUserFavorites(account_id,session_id);}
 }

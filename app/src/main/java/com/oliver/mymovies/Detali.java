@@ -170,7 +170,7 @@ public class Detali extends AppCompatActivity {
                     }
                         textNaslov.setText("Title :"+model.getOriginalTitle());
                     String image_url = model.getPosterPath();
-                    Picasso.with(context).load(image_url).fit().centerCrop().into(slika);
+                    Picasso.with(context).load(image_url).fit().into(slika);
 
                 }
             }

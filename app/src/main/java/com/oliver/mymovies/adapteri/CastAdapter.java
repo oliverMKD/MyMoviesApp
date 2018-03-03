@@ -58,7 +58,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.ViewHolder> {
 
 
         String image_url = cast1.getProfile_path();
-        Picasso.with(context).load(image_url).fit().centerCrop().into(holder.slika);
+        Picasso.with(context).load(image_url).fit().centerInside().into(holder.slika);
 
     }
 

@@ -41,7 +41,7 @@ import retrofit2.Response;
 public class TopRated extends Fragment {
     private Unbinder mUnbind;
     @BindView(R.id.MyRV)
-    RecyclerView rv;
+    public RecyclerView rv;
     RecyclerViewAdapter adapter;
     ArrayList<Film> results = new ArrayList<>();
     FilmModel model = new FilmModel();

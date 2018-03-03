@@ -56,7 +56,7 @@ public class RecyclerPeople extends RecyclerView.Adapter<RecyclerPeople.ViewHold
         People people = peopleList.get(position);
         holder.textIme.setText(peopleList.get(position).getName());
         String image_url = peopleList.get(position).getProfile_path();
-        Picasso.with(mContext).load(image_url).into(holder.slika);
+        Picasso.with(mContext).load(image_url).fit().into(holder.slika);
         for (KnownFor known : people.getKnown_for()  ) {
             holder.info.setText(holder.info.getText().toString() + known.getTitle());
         }

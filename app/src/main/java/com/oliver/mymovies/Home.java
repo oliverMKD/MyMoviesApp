@@ -4,16 +4,22 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.ContextWrapper;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -64,6 +70,11 @@ public class Home extends AppCompatActivity
     ArrayList<Film> results;
     @BindView(R.id.editSearch)
     EditText search;
+    public Film film = new Film();
+
+    Handler handler;
+    @BindView(R.id.MyRV)
+            RecyclerView rv;
 
 
     ProgressDialog pd;
@@ -78,7 +89,24 @@ public class Home extends AppCompatActivity
         context = this;
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-//        initViews();
+
+//        View view = navigationView.getHeaderView(0);
+//        Menu menu = navigationView.getMenu();
+//        String name2 = SharedPrefferences.getUser(this);
+//        String token = Sha.getToken(this);
+//        MenuItem logout_login = menu.findItem(R.id.login);
+//        View headerView = navigationView.getHeaderView(0);
+//        name3 = (TextView) headerView.findViewById(R.id.name);
+//        if (!token.isEmpty()) {
+//            name3.setText(name2);
+//            logout_login.setTitle("Logout");
+//            itemLog = "Logout";
+//        } else {
+//            name3.setText("Guest");
+//            logout_login.setTitle("Login");
+//            itemLog = "Login";
+//        }
+
         final VPagerAdapter adapter = new VPagerAdapter(this.getSupportFragmentManager());
         adapter.dodadiFragment(new Popular(),"POPULAR");
         adapter.dodadiFragment(new TopRated(),"TOP RATED");
@@ -95,6 +123,39 @@ public class Home extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        search.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(final CharSequence s, int start, int before, int count) {
+                handler = new Handler();
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.e("handler",s + "");
+                        if (s.toString().isEmpty()){
+                            rv.setVisibility(View.GONE);
+                            vPage.setVisibility(View.VISIBLE);
+                            tabs.setVisibility(View.VISIBLE);
+                        }else{
+                            String movie = search.getText().toString();
+                            rv.setVisibility(View.VISIBLE);
+                            vPage.setVisibility(View.GONE);
+                            tabs.setVisibility(View.GONE);
+                            MovieSearch(movie);}}},1000);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
 
@@ -104,16 +165,30 @@ public class Home extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("EXIT").setMessage("Do you want to exit?")
+                    .setPositiveButton("YES", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            finish();
+                        }
+                    });
+            builder.setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            });
+            builder.create().show();
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.home, menu);
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.home, menu);
+//        return true;
+//    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -171,12 +246,7 @@ public class Home extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-//    private void initViews(){
-//        pd = new ProgressDialog(this);
-//        pd.setMessage("Fetching Movies");
-//        pd.setCancelable(false);
-//        pd.show();
-//    }
+
     public Activity getActivity(){
         Context context = this;
         while (context instanceof ContextWrapper){
@@ -185,5 +255,85 @@ public class Home extends AppCompatActivity
             }context=((ContextWrapper)context).getBaseContext();
         }return null;
     }
+
+    public void MovieSearch(String link){
+        RestApi api = new RestApi(context);
+        Call<FilmModel> call = api.getSearchMovie(link);
+        call.enqueue(new Callback<FilmModel>() {
+            @Override
+            public void onResponse(Call<FilmModel> call, Response<FilmModel> response) {
+                if (response.code() == 200) {
+                    model = response.body();
+                    recyclerViewAdapter = new RecyclerViewAdapter(context, new OnRowClickListener() {
+                        @Override
+                        public void onRowClick(Film film5, int position) {
+                            Intent intent = new Intent(context, Detali.class);
+                            intent.putExtra("details",film5.id);
+                            startActivityForResult(intent,1111);
+                        }
+
+                        @Override
+                        public void onRatedClick(Film film, int id) {
+
+                        }
+
+                        @Override
+                        public void onWatchClick(Film film, int position) {
+
+                        }
+                    }) ;
+
+
+                    recyclerViewAdapter.setItems(model.results);
+                    rv.setHasFixedSize(true);
+                    rv.setLayoutManager(new GridLayoutManager(context,2));
+                    rv.setAdapter(recyclerViewAdapter);}}
+
+            @Override
+            public void onFailure(Call<FilmModel> call, Throwable t) {
+            }});
+}
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK && requestCode == 1111){
+            String session_id = SharedPrefferences.getSessionID(context);
+            pd.show();
+            RestApi api = new RestApi(context);
+            Call<FilmModel> call = api.getUserFavorites("account_id",session_id);
+            call.enqueue(new Callback<FilmModel>() {
+                @Override
+                public void onResponse(Call<FilmModel> call, Response<FilmModel> response) {
+                    if (response.code() == 200) {
+                        model = response.body();
+                        recyclerViewAdapter = new RecyclerViewAdapter(context, new OnRowClickListener() {
+                            @Override
+                            public void onRowClick(Film film6, int position) {
+                                Intent intent = new Intent(context,Detali.class);
+                                intent.putExtra("details", film6.id);
+                                startActivity(intent);
+                            }
+
+                            @Override
+                            public void onRatedClick(Film film, int id) {
+
+                            }
+
+                            @Override
+                            public void onWatchClick(Film film, int position) {
+                            }
+                            });
+                        recyclerViewAdapter.setItems(model.results);
+                        rv.setHasFixedSize(true);
+                        rv.setLayoutManager(new GridLayoutManager(context,2));
+                        rv.setAdapter(recyclerViewAdapter);
+                        pd.dismiss();
+                    }}
+                @Override
+                public void onFailure(Call<FilmModel> call, Throwable t) {
+                }});}}
+
+
+
 
 }

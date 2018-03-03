@@ -1,8 +1,10 @@
 package com.oliver.mymovies;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -38,6 +40,12 @@ public class LogIn extends AppCompatActivity {
     String token2;
     @BindView(R.id.textGostin)
     TextView gostin;
+    @BindView(R.id.tekstzaNov)
+    TextView textZaNov;
+    @BindView(R.id.tekstzaKreiranje)
+    TextView textZakreiranje;
+    ProgressDialog pd;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,7 @@ public class LogIn extends AppCompatActivity {
     }
     @OnClick(R.id.kopceLogIn)
     public void Klik (View v) {
+        initViews();
         getToken();
     }
 
@@ -90,7 +99,9 @@ public class LogIn extends AppCompatActivity {
                             SharedPrefferences.addUserID(token2,LogIn.this);
                             getSesion();
                         } else if (response.code() == 401) {
-                            Toast.makeText(LogIn.this, "Greska na konekcija", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LogIn.this, "Invalid username or password", Toast.LENGTH_SHORT).show();
+
+
                         }
                     }
                     @Override
@@ -136,5 +147,18 @@ public class LogIn extends AppCompatActivity {
         editor.commit();
         Intent intent = new Intent(this,Home.class);
         startActivity(intent);
+    }
+
+    @OnClick(R.id.tekstzaKreiranje)
+    public void klikklik(View view){
+        Intent intent2 = new Intent(Intent.ACTION_VIEW);
+        intent2.setData(Uri.parse("https://www.themoviedb.org/"));
+        startActivity(intent2);
+    }
+    private void initViews(){
+        ProgressDialog pd = new ProgressDialog(this);
+        pd.setMessage("Fetching Movies");
+        pd.setCancelable(true);
+        pd.show();
     }
 }

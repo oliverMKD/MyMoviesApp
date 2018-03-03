@@ -12,7 +12,7 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="150dp"/>
+        android:layout_marginTop="130dp"/>
     <EditText
         android:id="@+id/editPass"
         android:layout_width="250dp"
@@ -30,13 +30,33 @@
         android:background="@color/colorAccent"
         android:text="LOGIN"/>
     <TextView
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:text="LOG IN AS GEST !!!"
+        android:layout_centerInParent="true"
+        android:text="LOGIN AS GUEST !!!"
         android:textAlignment="center"
         android:clickable="true"
         android:layout_marginTop="20dp"
         android:id="@+id/textGostin"
         android:layout_below="@+id/kopceLogIn"/>
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:id="@+id/tekstzaNov"
+        android:layout_below="@+id/textGostin"
+        android:layout_centerInParent="true"
+        android:text="Not on themoviedb.org?"
+        android:textAlignment="center"/>
+    <TextView
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/tekstzaKreiranje"
+        android:layout_below="@+id/tekstzaNov"
+        android:layout_centerInParent="true"
+        android:text=" Create an Account."
+        android:clickable="true"
+        android:textColor="@color/colorAccent"
+        android:textAlignment="center"/>
 
 </RelativeLayout>

@@ -7,18 +7,24 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.oliver.mymovies.Home"
     tools:showIn="@layout/app_bar_home">
-    <EditText
-        android:id="@+id/editSearch"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="@color/colorPrimary"
-        android:hint="Search"
-        android:imeOptions="actionSearch"
-        />
+    <FrameLayout
 
+        android:id="@+id/frame"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/editSearch"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:background="@color/colorPrimary"
+            android:hint="Search"
+            android:imeOptions="actionSearch"
+            />
+    </FrameLayout>
     <android.support.v4.view.ViewPager
-        android:layout_below="@+id/editSearch"
+
         android:id="@+id/vp"
+        android:layout_below="@+id/frame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/colorPrimary">
@@ -30,10 +36,19 @@
             android:id="@+id/tablayout"
             android:background="@color/colorAccent"
             android:layout_width="match_parent"
-            android:layout_height="40dp"/>
-
+            android:layout_height="40dp"
+            />
 
     </android.support.v4.view.ViewPager>
 
-
+    <RelativeLayout
+    android:layout_below="@+id/frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    >
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/MyRV"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>
 </RelativeLayout>

@@ -47,10 +47,10 @@ public class Film implements Serializable {
 
     public Credits credits;
 
-    String baseImageUrl = "http://image.tmdb.org/t/p/w185";
+    String baseImageUrl = "http://image.tmdb.org/t/p/w500";
 
     public String getPosterPath(){
-        return "http://image.tmdb.org/t/p/w185" + posterPath;
+        return "http://image.tmdb.org/t/p/w500" + posterPath;
     }
 
     public Film() {

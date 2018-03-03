@@ -78,7 +78,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         String vote = Double.toString(modelfilms.results.get(position).getAverageVote());
         holder.rejting.setText("Rating :" +vote);
         String image_url = modelfilms.results.get(position).getPosterPath();
-        Picasso.with(mContext).load(image_url).fit().centerCrop().into(holder.film);
+        Picasso.with(mContext).load(image_url).fit().into(holder.film);
 
 //        Glide.with(mContext).load(movieList.get(position).getPosterPath()).into(holder.film);
 

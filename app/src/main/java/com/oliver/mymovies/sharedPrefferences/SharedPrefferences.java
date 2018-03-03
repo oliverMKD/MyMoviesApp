@@ -24,6 +24,12 @@ public class SharedPrefferences {
             return c.getApplicationContext().getSharedPreferences("MySharedPreffsFile", Activity.MODE_PRIVATE);
 
         }
+    public static void  addUser(String Name, Context c) {
+        getPreferences(c).edit().putString("name",Name).apply();
+    }
+    public static String getUser( Context c) {
+        return getPreferences(c).getString( "name","");
+    }
 
         public static void  addUserID (String Email, Context c) {
 
