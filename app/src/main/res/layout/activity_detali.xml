@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/plava6"
+    android:background="@color/colorPrimary"
     >
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,8 @@
             android:textAlignment="center"
             android:textSize="30sp"
             android:textAllCaps="true"
-            android:id="@+id/textGore"/>
+            android:id="@+id/textGore"
+            android:textColor="@color/White"/>
 
         <ImageView
             android:layout_below="@+id/textGore"
@@ -30,17 +31,11 @@
             android:id="@+id/kopceSrce"
             android:layout_below="@+id/slika_detali"
             android:background="@drawable/favourites_empty_mdpi"/>
-        <!--<ImageView-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:id="@+id/kopceZvezda"-->
-            <!--android:layout_toRightOf="@+id/kopceSave"-->
-            <!--android:layout_below="@+id/slika_detali"-->
-            <!--android:background="@drawable/rate_empty_mdpi"/>-->
-        <ImageView
+                <ImageView
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:id="@+id/kopceSave"
+                    android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/kopceSrce"
             android:layout_below="@+id/slika_detali"
             android:background="@drawable/watchlist_add_mdpi"/>
@@ -48,16 +43,25 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/kopceSrce"
+            android:textColor="@color/White"
+            android:textSize="17sp"
+            android:layout_marginLeft="5dp"
             android:id="@+id/textReziser"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textReziser"
+            android:textColor="@color/White"
+            android:layout_marginLeft="5dp"
+            android:textSize="17sp"
             android:id="@+id/textScenario"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textScenario"
+            android:textColor="@color/White"
+            android:layout_marginLeft="5dp"
+            android:textSize="17sp"
             android:id="@+id/textSvezdi"/>
         <Button
             android:layout_marginTop="10dp"
@@ -65,20 +69,28 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/textSvezdi"
-            android:background="@color/colorAccent"
+            android:background="@color/colorAccent2"
+            android:textColor="@color/White"
             android:text="see full cast"/>
         <Button
+            android:drawableLeft="@drawable/ic_play_circle_outline_black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/kopceLink"
             android:layout_below="@+id/kopceEkipa"
             android:text="Trailer"
-            android:background="@color/colorAccent"/>
+            android:textColor="@color/White"
+            android:layout_marginTop="5dp"
+            android:background="@color/colorAccent2"/>
         <TextView
+            android:layout_marginLeft="5dp"
             android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/kopceLink"
+            android:textColor="@color/White"
+            android:layout_marginBottom="50dp"
+            android:textSize="17sp"
             android:id="@+id/textOpis"/>
     </RelativeLayout>
 

@@ -5,18 +5,26 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.oliver.mymovies.api.RestApi;
 import com.oliver.mymovies.klasi.Token;
 import com.oliver.mymovies.klasi.User;
 import com.oliver.mymovies.sharedPrefferences.SharedPrefferences;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,7 +42,7 @@ public class LogIn extends AppCompatActivity {
     Button login;
     User user;
     RestApi api;
-    Context context;
+
     Token tokenModel;
     String token;
     String token2;
@@ -45,6 +53,12 @@ public class LogIn extends AppCompatActivity {
     @BindView(R.id.tekstzaKreiranje)
     TextView textZakreiranje;
     ProgressDialog pd;
+    @BindView(R.id.slikaNaslovna)
+    ImageView naslovna;
+    Context context;
+    @BindView(R.id.cbShowPwd)
+    CheckBox mCbShowPwd;
+
 
 
     @Override
@@ -52,6 +66,23 @@ public class LogIn extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_log_in);
         ButterKnife.bind(this);
+        context=this;
+
+        Picasso.with(context).load(R.drawable.film1).fit().centerInside().into(naslovna);
+        mCbShowPwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (!isChecked) {
+                    // show password
+                    pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    mCbShowPwd.setBackgroundResource(R.drawable.ic_remove_red_eye);
+                } else {
+                    pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    mCbShowPwd.setBackgroundResource(R.drawable.ic_remove_red_eye);
+                }
+            }
+        });
+//        Glide.with(context).load(R.drawable.mainthumb).into(holder.film);
     }
     @OnClick(R.id.kopceLogIn)
     public void Klik (View v) {
@@ -93,10 +124,15 @@ public class LogIn extends AppCompatActivity {
                 call.enqueue(new Callback<Token>() {
                     @Override
                     public void onResponse(Call<Token> call, Response<Token> response) {
-                        if (response.code() == 200) {
+                        if (data.username.isEmpty()&&data.password.isEmpty()){
+                            Toast.makeText(LogIn.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else if (response.code() == 200) {
                             tokenModel = response.body();
                             token2 = tokenModel.request_token;
                             SharedPrefferences.addUserID(token2,LogIn.this);
+
                             getSesion();
                         } else if (response.code() == 401) {
                             Toast.makeText(LogIn.this, "Invalid username or password", Toast.LENGTH_SHORT).show();

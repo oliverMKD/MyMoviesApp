@@ -16,7 +16,24 @@ public class Film implements Serializable {
     public boolean watchlist;
     public transient boolean rated;
 
+    public int budget;
+    public int revenue;
 
+    public int getBudget() {
+        return budget;
+    }
+
+    public void setBudget(int budget) {
+        this.budget = budget;
+    }
+
+    public int getRevenue() {
+        return revenue;
+    }
+
+    public void setRevenue(int revenue) {
+        this.revenue = revenue;
+    }
 
     @SerializedName("original_title")
     private String originalTitle;
@@ -45,6 +62,8 @@ public class Film implements Serializable {
     @SerializedName("backdrop_path")
     private String backdropPath;
 
+   public String original_language;
+
     public Credits credits;
 
     String baseImageUrl = "http://image.tmdb.org/t/p/w500";
@@ -56,7 +75,9 @@ public class Film implements Serializable {
     public Film() {
     }
 
-    public Film(int id, String originalTitle, String overview, String releaseDate, double popularity, String title, double averageVote, long voteCount, String backdropPath, String baseImageUrl) {
+    public Film(int budget, int revenue,  int id, String originalTitle, String overview, String releaseDate, double popularity, String title, double averageVote, long voteCount, String backdropPath, String baseImageUrl) {
+        this.budget = budget;
+        this.revenue = revenue;
         this.id = id;
         this.originalTitle = originalTitle;
         this.overview = overview;

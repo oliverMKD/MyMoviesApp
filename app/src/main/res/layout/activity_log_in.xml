@@ -7,18 +7,43 @@
     android:background="@color/colorPrimary"
     tools:context="com.oliver.mymovies.LogIn">
 
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="180dp"
+        android:layout_marginTop="50dp"
+        android:id="@+id/slikaNaslovna"/>
+
     <EditText
         android:id="@+id/editUser"
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:layout_marginTop="130dp"/>
+        android:hint="username"
+        android:textAlignment="center"
+        android:textColor="@color/WhiteSmoke"
+        />
     <EditText
         android:id="@+id/editPass"
         android:layout_width="250dp"
         android:layout_centerInParent="true"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/editUser"/>
+        android:textColor="@color/WhiteSmoke"
+        android:inputType="textPassword"
+        android:hint="password"
+        android:textAlignment="center"
+        android:layout_below="@+id/editUser"
+        android:focusable="true"
+        android:ems="10"/>
+    <CheckBox
+        android:id="@+id/cbShowPwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/editPass"
+        android:layout_below="@+id/editUser"
+        android:textColor="@color/White"
+        android:background="@drawable/ic_remove_red_eye"
+        />
+
 
     <Button
         android:id="@+id/kopceLogIn"
@@ -27,17 +52,19 @@
         android:layout_marginTop="20dp"
         android:layout_below="@+id/editPass"
         android:layout_centerInParent="true"
-        android:background="@color/colorAccent"
-        android:text="LOGIN"/>
+        android:background="@color/colorAccent2"
+        android:textColor="@color/white"
+        android:text="SIGN IN"/>
     <TextView
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="LOGIN AS GUEST !!!"
+        android:text="SIGN IN AS GUEST !!!"
         android:textAlignment="center"
         android:clickable="true"
         android:layout_marginTop="20dp"
         android:id="@+id/textGostin"
+        android:textColor="@color/white"
         android:layout_below="@+id/kopceLogIn"/>
     <TextView
         android:layout_width="250dp"
@@ -47,6 +74,7 @@
         android:layout_below="@+id/textGostin"
         android:layout_centerInParent="true"
         android:text="Not on themoviedb.org?"
+        android:textColor="@color/white"
         android:textAlignment="center"/>
     <TextView
         android:layout_width="250dp"
@@ -56,7 +84,7 @@
         android:layout_centerInParent="true"
         android:text=" Create an Account."
         android:clickable="true"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/WhiteSmoke"
         android:textAlignment="center"/>
 
 </RelativeLayout>

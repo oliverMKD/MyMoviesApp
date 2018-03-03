@@ -2,7 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content"
+    android:background="@color/colorPrimary">
 
     <ImageView
         android:id="@+id/slikaFilm"
@@ -12,49 +13,51 @@
         android:layout_below="@+id/slikaFilm"
         android:id="@+id/rel_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
 
     <TextView
         android:id="@+id/textNaslov"
+        android:layout_marginTop="8dp"
         android:layout_width="match_parent"
-        android:layout_height="45dp"
+        android:layout_height="wrap_content"
         android:layout_marginRight="5dp"
         android:layout_marginLeft="10dp"
         android:layout_toRightOf="@+id/kopceSrce"
+        android:textSize="15sp"
+        android:textColor="@color/white"
         />
-        <!--<Button-->
-            <!--android:id="@+id/kopceZvezda"-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_marginLeft="30dp"-->
-            <!--android:layout_below="@+id/textNaslov"-->
-            <!--android:background="@drawable/rate_empty_mdpi"/>-->
 
         <TextView
             android:id="@+id/textRejting"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_toRightOf="@+id/kopceZvezda"
+            android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="10dp"
             android:layout_below="@+id/textNaslov"
+            android:textSize="15sp"
+            android:textColor="@color/white"
             />
-        <!--<Button-->
-            <!--android:id="@+id/kopceSave"-->
-            <!--android:layout_width="40dp"-->
-            <!--android:layout_height="40dp"-->
-            <!--android:layout_marginLeft="30dp"-->
-            <!--android:background="@drawable/watchlist_add_mdpi"-->
-            <!--android:layout_below="@+id/kopceZvezda"/>-->
+
         <TextView
             android:id="@+id/textSave"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
-            android:layout_toRightOf="@+id/kopceZvezda"
+            android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_marginLeft="10dp"
             android:layout_below="@+id/textRejting"
+            android:textSize="15sp"
+            android:textColor="@color/white"
+            />
+        <TextView
+            android:id="@+id/textZarabotka"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_marginLeft="10dp"
+            android:layout_below="@+id/textSave"
+            android:textSize="15sp"
+            android:textColor="@color/white"
             />
     </RelativeLayout>
 

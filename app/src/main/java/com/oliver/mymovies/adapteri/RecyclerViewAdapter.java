@@ -76,7 +76,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
        final Film film2 = modelfilms.results.get(position);
         holder.naslov.setText("Title : " +modelfilms.results.get(position).getOriginalTitle());
         String vote = Double.toString(modelfilms.results.get(position).getAverageVote());
-        holder.rejting.setText("Rating :" +vote);
+        holder.rejting.setText("Rating : " +vote);
+        holder.textViewSave.setText("Release Date : "+modelfilms.results.get(position).getReleaseDate());
+//        holder.budzet.setText("Budget : "+modelfilms.results.get(position).budget);
+        holder.zarabotka.setText("Language : "+modelfilms.results.get(position).original_language);
         String image_url = modelfilms.results.get(position).getPosterPath();
         Picasso.with(mContext).load(image_url).fit().into(holder.film);
 
@@ -125,6 +128,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         TextView rejting;
         @BindView(R.id.textSave)
         TextView textViewSave;
+//        @BindView(R.id.textbudzet)
+//                TextView budzet;
+        @BindView(R.id.textZarabotka)
+                TextView zarabotka;
         RestApi api;
 //        @BindView(R.id.kopceZvezdaStisnato)
 //        Button zvezdaStisnata;

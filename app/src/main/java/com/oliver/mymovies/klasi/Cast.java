@@ -11,10 +11,10 @@ public class Cast implements Serializable {
    public String name;
    public String profile_path;
 
-    String baseImageUrl = "http://image.tmdb.org/t/p/w185";
+    String baseImageUrl = "http://image.tmdb.org/t/p/w500";
 
     public String getProfile_path() {
-        return "http://image.tmdb.org/t/p/w185" +  profile_path;
+        return "http://image.tmdb.org/t/p/w500" +  profile_path;
     }
 
     public void setProfile_path(String profile_path) {

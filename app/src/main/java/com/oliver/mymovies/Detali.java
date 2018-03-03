@@ -168,7 +168,7 @@ public class Detali extends AppCompatActivity {
                     } else {
                         svezdi.setText("Stars: ");
                     }
-                        textNaslov.setText("Title :"+model.getOriginalTitle());
+                        textNaslov.setText("Title : "+"\n" +model.getOriginalTitle());
                     String image_url = model.getPosterPath();
                     Picasso.with(context).load(image_url).fit().into(slika);
 
