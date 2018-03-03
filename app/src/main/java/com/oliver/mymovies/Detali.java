@@ -203,7 +203,7 @@ public class Detali extends AppCompatActivity {
                 if (response.isSuccessful()){
                     Film film = new Film();
                     film = response.body();
-                    Picasso.with(context).load(R.drawable.favourites_full_mdpi).fit().centerCrop().into(favo);
+                    Picasso.with(context).load(R.drawable.favourites_full_mdpi).into(favo);
                     favo.setClickable(false);
                     SharedPrefferences.addFavorites("favorites", context);
                     Toast.makeText(context, "added to favoriTI", Toast.LENGTH_SHORT).show();

@@ -33,6 +33,7 @@ import android.view.MenuItem;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,15 +46,18 @@ import com.oliver.mymovies.fragmenti.Popular;
 import com.oliver.mymovies.fragmenti.TopRated;
 import com.oliver.mymovies.fragmenti.Upcoming;
 import com.oliver.mymovies.klasi.Film;
+import com.oliver.mymovies.klasi.User;
 import com.oliver.mymovies.model.FilmModel;
 import com.oliver.mymovies.onRow.OnRowClickListener;
 import com.oliver.mymovies.sharedPrefferences.SharedPrefferences;
+import com.squareup.picasso.Picasso;
 //import com.oliver.mymovies.fragmenti.Popular;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -72,10 +76,14 @@ public class Home extends AppCompatActivity
     @BindView(R.id.editSearch)
     EditText search;
     public Film film = new Film();
-
+    User userActive = new User();
     Handler handler;
     @BindView(R.id.MyRV)
-            RecyclerView rv;
+    RecyclerView rv;
+    RestApi api;
+    TextView username;
+    TextView txtName;
+    ImageView imgProfile;
 
 
     ProgressDialog pd;
@@ -91,6 +99,47 @@ public class Home extends AppCompatActivity
         Home.this.getWindow().setSoftInputMode(
                 WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN
         );
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
+        View view = navigationView.getHeaderView(0);
+        Menu menu = navigationView.getMenu();
+        View headerView = navigationView.getHeaderView(0);
+        txtName = (TextView) headerView.findViewById(R.id.Ime);
+        username = (TextView) headerView.findViewById(R.id.textView);
+        final String sessionID = SharedPrefferences.getSessionID(context);
+        imgProfile = (ImageView) headerView.findViewById(R.id.profile_image);
+        if(sessionID!=null && !sessionID.isEmpty())
+
+        { api = new RestApi(context);
+        Call<User>call = api.getAccountDetails(sessionID);
+        call.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                if (response.isSuccessful()){
+                        userActive=response.body();
+                        imgProfile.setMaxWidth(70);
+                        imgProfile.setMaxHeight(70);
+                    Picasso.with(Home.this).load("http://www.gravatar.com/avatar/"
+                    +userActive.avatar.gravatar.hash).into(imgProfile);
+                    txtName.setText(userActive.getName());
+                    username.setText(userActive.username);
+                    Toast.makeText(Home.this, "Uspesno Gravatar", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Home.this, "greska gravatar", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable t) {
+
+            }
+        });
+
+
+
+        }
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -125,7 +174,7 @@ public class Home extends AppCompatActivity
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+//        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
 

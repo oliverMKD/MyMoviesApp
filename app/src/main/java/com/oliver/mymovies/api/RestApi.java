@@ -138,4 +138,8 @@ public class RestApi {
     }
     public Call<FilmModel> getUserFavorites(String account_id,String session_id)
     {return request().getUserFavorites(account_id,session_id);}
+
+    public Call<User> getAccountDetails(String session_id)
+    {return request().getAccountDetails(session_id);}
+
 }
