@@ -15,6 +15,7 @@ import com.oliver.mymovies.klasi.KnownFor;
 import com.oliver.mymovies.klasi.People;
 import com.oliver.mymovies.model.FilmModel;
 import com.oliver.mymovies.model.PeopleModel;
+import com.oliver.mymovies.onRow.OnRowCast;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -29,13 +30,15 @@ import butterknife.ButterKnife;
 
 public class RecyclerPeople extends RecyclerView.Adapter<RecyclerPeople.ViewHolder> {
     public Context mContext;
+    OnRowCast onRowCast;
 
     public List<People> peopleList = new ArrayList<>();
     PeopleModel model;
 
-    public RecyclerPeople (Context mContext, PeopleModel model) {
+    public RecyclerPeople (Context mContext, PeopleModel model,OnRowCast _onrowCast) {
         this.mContext = mContext;
         peopleList=model.results;
+        this.onRowCast=_onrowCast;
     }
 
 
@@ -53,13 +56,19 @@ public class RecyclerPeople extends RecyclerView.Adapter<RecyclerPeople.ViewHold
 
     @Override
     public void onBindViewHolder(RecyclerPeople.ViewHolder holder, final int position) {
-        People people = peopleList.get(position);
+        final People people = peopleList.get(position);
         holder.textIme.setText(peopleList.get(position).getName());
         String image_url = peopleList.get(position).getProfile_path();
         Picasso.with(mContext).load(image_url).fit().into(holder.slika);
         for (KnownFor known : people.getKnown_for()  ) {
             holder.info.setText(holder.info.getText().toString() + known.getTitle());
         }
+        holder.slika.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onRowCast.onRowClick(people,position);
+            }
+        });
 
 
     }
@@ -79,6 +88,10 @@ public class RecyclerPeople extends RecyclerView.Adapter<RecyclerPeople.ViewHold
         TextView textIme;
         @BindView(R.id.desc)
         TextView info;
+//        @BindView(R.id.data)
+//        TextView rodenden;
+//        @BindView(R.id.bio)
+//        TextView biografija;
 
 
 

@@ -52,12 +52,14 @@ public class LogIn extends AppCompatActivity {
     TextView textZaNov;
     @BindView(R.id.tekstzaKreiranje)
     TextView textZakreiranje;
-    ProgressDialog pd;
+    public ProgressDialog pd;
     @BindView(R.id.slikaNaslovna)
     ImageView naslovna;
     Context context;
     @BindView(R.id.cbShowPwd)
     CheckBox mCbShowPwd;
+    @BindView(R.id.slikaCheck)
+    ImageView chek;
 
 
 
@@ -69,6 +71,7 @@ public class LogIn extends AppCompatActivity {
         context=this;
 
         Picasso.with(context).load(R.drawable.film1).fit().centerInside().into(naslovna);
+        Picasso.with(context).load(R.drawable.ic_remove_red_eye).fit().into(chek);
         mCbShowPwd.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -76,6 +79,7 @@ public class LogIn extends AppCompatActivity {
                     // show password
                     pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
                     mCbShowPwd.setBackgroundResource(R.drawable.ic_remove_red_eye);
+
                 } else {
                     pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
                     mCbShowPwd.setBackgroundResource(R.drawable.ic_remove_red_eye);
@@ -89,9 +93,6 @@ public class LogIn extends AppCompatActivity {
         initViews();
         getToken();
     }
-
-
-
     public void getToken() {
         api = new RestApi(LogIn.this);
         {
@@ -104,13 +105,13 @@ public class LogIn extends AppCompatActivity {
                         token = tokenModel.request_token;
                         getLogin();  // text polinja
                     } else if (response.code() == 401) {
-                        Toast.makeText(LogIn.this, "Greska na konekcija", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LogIn.this, "Connection error, please try again !", Toast.LENGTH_SHORT).show();
                     }
                 }
 
                 @Override
                 public void onFailure(Call<Token> call, Throwable t) {
-                    Toast.makeText(LogIn.this, "Something went wrong!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(LogIn.this, "Something went wrong, please try again !!", Toast.LENGTH_LONG).show();
                 }
             });
 
@@ -126,7 +127,7 @@ public class LogIn extends AppCompatActivity {
                     public void onResponse(Call<Token> call, Response<Token> response) {
                         if (data.username.isEmpty()&&data.password.isEmpty()){
                             Toast.makeText(LogIn.this, "Please enter username and password", Toast.LENGTH_SHORT).show();
-
+                            pd.hide();
                         }
                         else if (response.code() == 200) {
                             tokenModel = response.body();
@@ -142,15 +143,12 @@ public class LogIn extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(Call<Token> call, Throwable t) {
-                        Toast.makeText(LogIn.this, "Something went wrong!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LogIn.this, "Something went wrong, please try again !!", Toast.LENGTH_LONG).show();
                     }
                 });
 
     }
     public void getSesion() {
-
-
-
         api = new RestApi(LogIn.this);
                 Call<Token> call = api.getSESION(token2);
                 call.enqueue(new Callback<Token>() {
@@ -168,7 +166,7 @@ public class LogIn extends AppCompatActivity {
                     }
                     @Override
                     public void onFailure(Call<Token> call, Throwable t) {
-                        Toast.makeText(LogIn.this, "Something went wrong!", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LogIn.this, "Something went wrong, please try again !!", Toast.LENGTH_LONG).show();
                     }
                 });
 
@@ -192,7 +190,7 @@ public class LogIn extends AppCompatActivity {
         startActivity(intent2);
     }
     private void initViews(){
-        ProgressDialog pd = new ProgressDialog(this);
+        pd = new ProgressDialog(this);
         pd.setMessage("Fetching Movies");
         pd.setCancelable(true);
         pd.show();

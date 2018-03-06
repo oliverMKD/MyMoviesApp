@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorPrimary"
+    android:background="@color/grey_700"
     tools:context="com.oliver.mymovies.LogIn">
 
     <ImageView
@@ -41,6 +41,19 @@
         android:layout_toRightOf="@+id/editPass"
         android:layout_below="@+id/editUser"
         android:textColor="@color/White"
+        android:background="@android:color/transparent"
+
+
+        />
+    <ImageView
+        android:id="@+id/slikaCheck"
+        android:layout_width="30dp"
+        android:layout_height="27dp"
+        android:layout_toRightOf="@+id/editPass"
+        android:layout_below="@+id/editUser"
+        android:textColor="@color/White"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="2dp"
         android:background="@drawable/ic_remove_red_eye"
         />
 

@@ -2,7 +2,9 @@ package com.oliver.mymovies.api;
 import com.oliver.mymovies.Watchlist;
 import com.oliver.mymovies.klasi.Favorites;
 import com.oliver.mymovies.klasi.Film;
+import com.oliver.mymovies.klasi.People;
 import com.oliver.mymovies.klasi.Rated;
+import com.oliver.mymovies.klasi.RatedList;
 import com.oliver.mymovies.klasi.Token;
 import com.oliver.mymovies.klasi.User;
 import com.oliver.mymovies.model.FilmModel;
@@ -50,7 +52,7 @@ public interface ApiService {
 
 //    RATED E DOBRO I POST I GET !!!!!
     @POST("movie/{movie_id}/rating?" + ApiConstants.api_key)
-    Call<Film> postUserRating( @Path("movie_id") int movie_id,@Query("session_id") String session_id, @Header("json/application") String json, @Body Rated body);
+    Call<Film> postUserRating(@Path("movie_id") int movie_id,@Query("session_id") String session_id, @Header("json/application") String json, @Body Rated body);
 
     @GET("account/account_id/rated/movies?" + ApiConstants.api_key)
     Call<FilmModel> getRated(@Query("session_id") String session_id);
@@ -94,6 +96,9 @@ public interface ApiService {
 
     @GET("account?" + ApiConstants.api_key)
     Call<User> getAccountDetails(@Query("session_id")String session_id);
+
+    @GET("person/{person_id}?" + ApiConstants.api_key)
+    Call<People> getPerson(@Path("person_id") int person_id);
 
 
 

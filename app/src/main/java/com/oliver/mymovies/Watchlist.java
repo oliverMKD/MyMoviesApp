@@ -66,7 +66,9 @@ public class Watchlist extends AppCompatActivity {
                     rv.setHasFixedSize(true);
                     rv.setLayoutManager(new GridLayoutManager(context,2));
                     rv.setAdapter(adapter);
-                    Toast.makeText(Watchlist.this, "uspesno watch", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Watchlist.this, "successful", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(Watchlist.this, "connection error", Toast.LENGTH_SHORT).show();
                 }
             }
 

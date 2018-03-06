@@ -110,7 +110,6 @@ public class Home extends AppCompatActivity
         final String sessionID = SharedPrefferences.getSessionID(context);
         imgProfile = (ImageView) headerView.findViewById(R.id.profile_image);
         if(sessionID!=null && !sessionID.isEmpty())
-
         { api = new RestApi(context);
         Call<User>call = api.getAccountDetails(sessionID);
         call.enqueue(new Callback<User>() {
@@ -124,9 +123,13 @@ public class Home extends AppCompatActivity
                     +userActive.avatar.gravatar.hash).into(imgProfile);
                     txtName.setText(userActive.getName());
                     username.setText(userActive.username);
-                    Toast.makeText(Home.this, "Uspesno Gravatar", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(Home.this, "greska gravatar", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Home.this, "Login successful", Toast.LENGTH_SHORT).show();
+                } else if (sessionID==null&&sessionID.isEmpty()){
+                    Picasso.with(Home.this).load(R.drawable.mysteryguy).fit().centerInside().into(imgProfile);
+                    username.setText("Guest");
+                }
+                else if (response.code()==400){
+                    Toast.makeText(Home.this, "Avatar error", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -135,8 +138,6 @@ public class Home extends AppCompatActivity
 
             }
         });
-
-
 
         }
 

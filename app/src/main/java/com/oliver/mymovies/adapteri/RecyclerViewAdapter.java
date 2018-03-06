@@ -19,6 +19,7 @@ import com.oliver.mymovies.R;
 import com.oliver.mymovies.api.RestApi;
 import com.oliver.mymovies.klasi.Film;
 import com.oliver.mymovies.klasi.Rated;
+import com.oliver.mymovies.klasi.RatedList;
 import com.oliver.mymovies.klasi.User;
 import com.oliver.mymovies.model.FilmModel;
 import com.oliver.mymovies.onRow.OnRowClickListener;
@@ -45,6 +46,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     FilmModel modelfilms = new FilmModel();
     Film film111;
     RestApi api;
+    Rated rated;
+    RatedList ratedList = new RatedList();
 
 
 
@@ -112,6 +115,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
+
         return modelfilms.results.size();
     }
 

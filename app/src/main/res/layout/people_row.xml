@@ -34,7 +34,10 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/White"
                 android:textSize="15sp"
-                android:text="Info :  " />
+                android:text="Known for :  " />
+
+
+
         </LinearLayout>
     </LinearLayout>
 

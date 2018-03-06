@@ -66,7 +66,7 @@ public class FullCast extends AppCompatActivity {
                     rv.setLayoutManager(new GridLayoutManager(context,1));
                     rv.setAdapter(adapter);
                 }else  {
-                    Toast.makeText(context, "greska", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Something went wrong, please try again", Toast.LENGTH_SHORT).show();
                 }
 
 

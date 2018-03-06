@@ -67,9 +67,9 @@ public class Favourites extends AppCompatActivity {
                     rv.setHasFixedSize(true);
                     rv.setLayoutManager(new GridLayoutManager(context,2));
                     rv.setAdapter(adapter);
-                    Toast.makeText(context, "uspesno", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "successful", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(context, "greska vo favorites", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "connection error", Toast.LENGTH_SHORT).show();
                 }
 
             }

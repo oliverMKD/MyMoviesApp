@@ -15,10 +15,12 @@
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"
+        android:background="@color/grey_700"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
+        app:itemTextColor="@color/Gainsboro"
         app:headerLayout="@layout/nav_header_home"
         app:menu="@menu/activity_home_drawer" />
 

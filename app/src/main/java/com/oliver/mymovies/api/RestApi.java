@@ -8,7 +8,9 @@ import com.oliver.mymovies.Watchlist;
 import com.oliver.mymovies.interceptor.LoggingInterceptor;
 import com.oliver.mymovies.klasi.Favorites;
 import com.oliver.mymovies.klasi.Film;
+import com.oliver.mymovies.klasi.People;
 import com.oliver.mymovies.klasi.Rated;
+import com.oliver.mymovies.klasi.RatedList;
 import com.oliver.mymovies.klasi.Token;
 import com.oliver.mymovies.klasi.User;
 import com.oliver.mymovies.model.FilmModel;
@@ -141,5 +143,8 @@ public class RestApi {
 
     public Call<User> getAccountDetails(String session_id)
     {return request().getAccountDetails(session_id);}
+
+    public Call<People> getPerson(int person_id)
+    {return request().getPerson(person_id);}
 
 }

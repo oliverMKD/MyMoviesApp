@@ -8,12 +8,12 @@ import com.google.gson.annotations.SerializedName;
 
 public class Rated {
 
-    @SerializedName("value")
-    public int value;
 
-    public int id;
+    public float value;
 
-    public int getValue() {
+//    public int id;
+
+    public float getValue() {
         return value;
     }
 

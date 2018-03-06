@@ -1,26 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:showIn="navigation_view">
+    tools:showIn="navigation_view"
+    >
 
-    <group android:checkableBehavior="single">
+    <group
+        android:checkableBehavior="single">
         <item
             android:id="@+id/nav_explore"
-            android:title="Explore" />
+            android:icon="@drawable/search_icon_hdpi"
+            android:title="Explore"
+            />
         <item
             android:id="@+id/nav_favourites"
+            android:icon="@drawable/favourites_full_hdpi"
             android:title="Favourites" />
         <item
             android:id="@+id/nav_rated"
+            android:icon="@drawable/ic_star_rate_black"
             android:title="Rated" />
         <item
             android:id="@+id/nav_watchlist"
+            android:icon="@drawable/watchlist_add_hdpi"
             android:title="Watchlist" />
         <item
             android:id="@+id/nav_people"
+            android:icon="@drawable/ic_people_black"
             android:title="People" />
         <item
             android:id="@+id/nav_login"
+            android:icon="@drawable/logout"
             android:title="Logout" />
     </group>
 

@@ -32,7 +32,8 @@
         <activity android:name=".Detali" />
         <activity android:name=".FullCast" />
         <activity android:name=".SearchActivity" />
-        <activity android:name=".VideoActivity"></activity>
+        <activity android:name=".VideoActivity" />
+        <activity android:name=".PeopleDetali"></activity>
     </application>
 
 </manifest>

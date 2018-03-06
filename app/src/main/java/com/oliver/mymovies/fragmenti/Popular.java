@@ -69,13 +69,14 @@ public class Popular extends android.support.v4.app.Fragment {
 //        rv.setLayoutManager(new GridLayoutManager(getContext(),2));
 //
         api = new RestApi(getActivity());
-//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//            public void onRefresh() {
-//
-//                Toast.makeText(getActivity(), "Refreshing", Toast.LENGTH_SHORT).show();
-//            }
-//        });
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                swipeContainer.setRefreshing(false);
+
+                Toast.makeText(getActivity(), "Refreshing", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         Call<FilmModel> call = api.getPopular();
         call.enqueue(new Callback<FilmModel>() {

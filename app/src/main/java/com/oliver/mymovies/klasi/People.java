@@ -9,9 +9,15 @@ import java.util.ArrayList;
 
 public class People implements Serializable {
 
-    String profile_path;
-    String id;
-    String name;
+    public String profile_path;
+   public int id;
+    public String name;
+    public String birthday;
+    public String biography;
+    public String deathday;
+
+    public People() {
+    }
 
     ArrayList<KnownFor> known_for = new ArrayList<>();
 
@@ -28,7 +34,7 @@ public class People implements Serializable {
         this.known_for = known_for;
     }
 
-    public People(String profile_path, String id, String name) {
+    public People(String profile_path, int id, String name) {
         this.profile_path = profile_path;
         this.id = id;
         this.name = name;
@@ -40,11 +46,11 @@ public class People implements Serializable {
         this.profile_path = profile_path;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

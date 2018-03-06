@@ -2,6 +2,7 @@ package com.oliver.mymovies.fragmenti;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -60,13 +61,13 @@ public class NowPlaying extends Fragment {
         View view = inflater.inflate(R.layout.fragment_nowplaying, null);
         mUnbind = ButterKnife.bind(this, view);
         api = new RestApi(getContext());
-//        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
-//            @Override
-//        public void onRefresh() {
-//
-//            Toast.makeText(getActivity(), "Refreshing", Toast.LENGTH_SHORT).show();
-//        }
-//    });
+        swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+        public void onRefresh() {
+
+            Toast.makeText(getActivity(), "Refreshing", Toast.LENGTH_SHORT).show();
+        }
+    });
 
 
         Call<FilmModel> call = api.getNowPlaying();
@@ -93,7 +94,7 @@ public class NowPlaying extends Fragment {
             final Rated rated = new Rated();
             film = new Film();
             rated.value=5;
-            rated.id=film.id;
+//            rated.id=film.id;
             String aaa = SharedPrefferences.getSessionID(getActivity());
             Call<Film> call = api.postUserRating(modelj.id,aaa,"json/application",rated);
             call.enqueue(new Callback<Film>() {
@@ -164,7 +165,57 @@ public class NowPlaying extends Fragment {
 
 
 
-        }); return view;
+        });
+
+        return view;
+    }
+
+    public void onRefresh() {
+        new Handler().postDelayed(new Runnable() {
+            @Override public void run() {
+                Call<FilmModel> call = api.getNowPlaying();
+                call.enqueue(new Callback<FilmModel>() {
+                    @Override
+                    public void onResponse(Call<FilmModel> call, Response<FilmModel> response) {
+                        if (response.isSuccessful()){
+                            model = response.body();
+                            swipeContainer.setRefreshing(false);
+
+                            adapter = new RecyclerViewAdapter(getActivity(), new OnRowClickListener() {
+                                @Override
+                                public void onRowClick(Film film, int position) {
+                                    Intent intent = new Intent(getActivity(),Detali.class);
+                                    intent.putExtra("details", film.id);
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onRatedClick(Film film, int id) {
+
+                                }
+
+                                @Override
+                                public void onWatchClick(Film film, int position) {
+
+                                }
+                            });
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<FilmModel> call, Throwable t) {
+
+                    }
+                });
+                adapter.setItems(model.results);
+                rv.setHasFixedSize(true);
+                rv.setLayoutManager(new GridLayoutManager(getActivity(),2));
+                rv.setAdapter(adapter);
+                swipeContainer.setRefreshing(false);
+                swipeContainer.setVisibility(View.INVISIBLE);
+            }
+        }, 5);
+
     }
 
     @Override
@@ -172,5 +223,6 @@ public class NowPlaying extends Fragment {
         super.onDestroy();
         mUnbind.unbind();
     }
+
 
 }

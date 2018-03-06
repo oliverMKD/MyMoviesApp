@@ -26,19 +26,27 @@
             android:id="@+id/slika_detali">
         </ImageView>
         <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:id="@+id/kopceSrce"
             android:layout_below="@+id/slika_detali"
-            android:background="@drawable/favourites_empty_mdpi"/>
+            android:background="@drawable/favourites_empty_hdpi"/>
                 <ImageView
-            android:layout_width="40dp"
-            android:layout_height="40dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:id="@+id/kopceSave"
                     android:layout_marginLeft="10dp"
             android:layout_toRightOf="@+id/kopceSrce"
             android:layout_below="@+id/slika_detali"
-            android:background="@drawable/watchlist_add_mdpi"/>
+            android:background="@drawable/watchlist_add_hdpi"/>
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:id="@+id/kopcerating"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/kopceSave"
+            android:layout_below="@+id/slika_detali"
+            android:background="@drawable/rate_empty_mdpi"/>
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -71,14 +79,17 @@
             android:layout_below="@+id/textSvezdi"
             android:background="@color/colorAccent2"
             android:textColor="@color/White"
-            android:text="see full cast"/>
+            android:drawableStart="@drawable/ic_local_movies_black"
+            android:text="see full cast"
+            android:drawableLeft="@drawable/ic_local_movies_black" />
         <Button
             android:drawableLeft="@drawable/ic_play_circle_outline_black"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/kopceLink"
             android:layout_below="@+id/kopceEkipa"
-            android:text="Trailer"
+            android:text="watch movie trailer"
+
             android:textColor="@color/White"
             android:layout_marginTop="5dp"
             android:background="@color/colorAccent2"/>

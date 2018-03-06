@@ -58,11 +58,12 @@ public class Detali extends AppCompatActivity {
     FilmModel filmModel;
     @BindView(R.id.kopceLink)
     Button link;
-//    @BindView(R.id.kopceZvezda)
-//    ImageView rating;
+    @BindView(R.id.kopcerating)
+    ImageView rating;
     @BindView(R.id.kopceSave)
     ImageView watch;
-    com.oliver.mymovies.klasi.Rated rated = new com.oliver.mymovies.klasi.Rated();
+   public com.oliver.mymovies.klasi.Rated rated2 ;
+    RatedList ratedList;
 
 
     @Override
@@ -82,11 +83,11 @@ public class Detali extends AppCompatActivity {
     }
 
 
-//             @OnClick(R.id.kopceZvezda)
-//                     public void klik5 (View v) {
-//        onRatedClick();
-//
-//    }
+             @OnClick(R.id.kopcerating)
+                     public void klik5 (View v) {
+        onRatedClick();
+
+    }
 
     @OnClick(R.id.kopceSave)
     public void klik6 (View v) {
@@ -168,9 +169,9 @@ public class Detali extends AppCompatActivity {
                     } else {
                         svezdi.setText("Stars: ");
                     }
-                        textNaslov.setText("Title : "+"\n" +model.getOriginalTitle());
+                        textNaslov.setText(""+"\n" +model.getOriginalTitle());
                     String image_url = model.getPosterPath();
-                    Picasso.with(context).load(image_url).fit().into(slika);
+                    Picasso.with(context).load(image_url).fit().centerInside().into(slika);
 
                 }
             }
@@ -206,7 +207,7 @@ public class Detali extends AppCompatActivity {
                     Picasso.with(context).load(R.drawable.favourites_full_mdpi).into(favo);
                     favo.setClickable(false);
                     SharedPrefferences.addFavorites("favorites", context);
-                    Toast.makeText(context, "added to favoriTI", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "added to Favorites", Toast.LENGTH_SHORT).show();
                 } else if (response.code()==401){
                     Toast.makeText(context, "Please Log In", Toast.LENGTH_SHORT).show();
                 }
@@ -236,23 +237,23 @@ public class Detali extends AppCompatActivity {
                     } if (model.watchlist==true){
                         Picasso.with(context).load(R.drawable.watchlist_remove_mdpi).fit().centerCrop().into(watch);
                         watch.setClickable(false);
-//                        rating.setVisibility(View.INVISIBLE);
-//                        rating.setClickable(false);
+//
                     }
-
-//                    final int value = rated.value;
-//                    if (value==model.id){
-//                       rating.setVisibility(View.INVISIBLE);
+//                    if (model.rated2.value>0){
+//                        Picasso.with(context).load(R.drawable.ic_star_rate_black).fit().centerCrop().into(rating);
+//                        rating.setClickable(false);
 //                    }
+
+//
                 }else if (response.code()==401){
-                    Toast.makeText(context, "please log in !", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "Please log In", Toast.LENGTH_SHORT).show();
                 }
 
             }
 
             @Override
             public void onFailure(Call<Film> call, Throwable t) {
-                Toast.makeText(context, "padna favorit", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Something went wrong, please try again !", Toast.LENGTH_SHORT).show();
 
             }
         });
@@ -290,35 +291,37 @@ public class Detali extends AppCompatActivity {
         });
     }
 
-//    public void onRatedClick() {
-//        api = new RestApi(context);
-//        final com.oliver.mymovies.klasi.Rated rated = new com.oliver.mymovies.klasi.Rated();
-//        rated.value = 5;
-////        rated.id=model.id;
-//        String aaa = SharedPrefferences.getSessionID(context);
-//        Call<Film> call = api.postUserRating(model.id, aaa, "json/application", rated);
-//        call.enqueue(new Callback<Film>() {
-//            @Override
-//            public void onResponse(Call<Film> call, Response<Film> response) {
-//                if (response.isSuccessful()) {
-//                    Film model1 = new Film();
-//                    model1 = response.body();
-//                    Toast.makeText(context, "added to Rated", Toast.LENGTH_SHORT).show();
-//                    rating.setClickable(false);
-//                    rating.setVisibility(View.INVISIBLE);
-////                        SharedPrefferences.addRated("rated", getActivity());
-//                } else if (response.code() == 401) {
-//                    Toast.makeText(context, "please log in !", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Film> call, Throwable t) {
-//                Toast.makeText(Detali.this, "neuspesno rated", Toast.LENGTH_SHORT).show();
-//            }
-//        });
-//
-//    }
+    public void onRatedClick() {
+        api = new RestApi(context);
+       final com.oliver.mymovies.klasi.Rated rated2 = new com.oliver.mymovies.klasi.Rated();
+        rated2.value = 5;
+//        rated.id=model.id;
+        String aaa = SharedPrefferences.getSessionID(context);
+        Call<Film> call = api.postUserRating(model.id, aaa, "json/application", rated2);
+        call.enqueue(new Callback<Film>() {
+            @Override
+            public void onResponse(Call<Film> call, Response<Film> response) {
+                if (response.isSuccessful()) {
+                    Film model1 = new Film();
+                    ratedList = new RatedList();
+                    model1 = response.body();
+                    ratedList.ratedmovies.add(rated2);
+                    Toast.makeText(context, "added to Rated", Toast.LENGTH_SHORT).show();
+                    rating.setClickable(false);
+                    rating.setVisibility(View.INVISIBLE);
+//                        SharedPrefferences.addRated("rated", getActivity());
+                } else if (response.code() == 401) {
+                    Toast.makeText(context, "please log in !", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Film> call, Throwable t) {
+                Toast.makeText(Detali.this, "Something went wrong, please try again !", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
 
     public void onWatchClick() {
         String aaa = SharedPrefferences.getSessionID(context);
@@ -345,6 +348,7 @@ public class Detali extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Film> call, Throwable t) {
+                Toast.makeText(context, "Something went wrong, please try again !", Toast.LENGTH_SHORT).show();
 
             }
         });

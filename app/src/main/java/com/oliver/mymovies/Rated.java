@@ -5,10 +5,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.widget.Toast;
 
 import com.oliver.mymovies.adapteri.RecyclerViewAdapter;
 import com.oliver.mymovies.api.RestApi;
 import com.oliver.mymovies.klasi.Film;
+import com.oliver.mymovies.klasi.RatedList;
 import com.oliver.mymovies.klasi.User;
 import com.oliver.mymovies.model.FilmModel;
 import com.oliver.mymovies.onRow.OnRowClickListener;
@@ -29,7 +31,7 @@ public class Rated extends AppCompatActivity {
     RestApi api;
     Film film;
     Context context;
-
+    RatedList ratedList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,11 +66,14 @@ public class Rated extends AppCompatActivity {
                     rv.setHasFixedSize(true);
                     rv.setLayoutManager(new GridLayoutManager(context,2));
                     rv.setAdapter(adapter);
+                } else {
+                    Toast.makeText(Rated.this, "connection error", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
             public void onFailure(Call<FilmModel> call, Throwable t) {
+                Toast.makeText(Rated.this, "connection error", Toast.LENGTH_SHORT).show();
 
             }
         });
