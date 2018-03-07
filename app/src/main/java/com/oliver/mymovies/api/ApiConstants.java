@@ -5,6 +5,6 @@ package com.oliver.mymovies.api;
  */
 
 public class ApiConstants {
-    public static final String api_key = "api_key=1702d47c418687e73ada55eda26d078b";
+    public static final String api_key = "api_key=3cdb017b13754b099daa6105613f191d";
     public static final String USER_DETAILS="";
 }
