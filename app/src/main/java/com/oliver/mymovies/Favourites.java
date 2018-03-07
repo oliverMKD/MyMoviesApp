@@ -69,7 +69,7 @@ public class Favourites extends AppCompatActivity {
                     rv.setAdapter(adapter);
                     Toast.makeText(context, "successful", Toast.LENGTH_SHORT).show();
                 }else {
-                    Toast.makeText(context, "connection error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "connection error.You are not logged in. Please, log in !", Toast.LENGTH_SHORT).show();
                 }
 
             }

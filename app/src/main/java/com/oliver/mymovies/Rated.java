@@ -67,7 +67,7 @@ public class Rated extends AppCompatActivity {
                     rv.setLayoutManager(new GridLayoutManager(context,2));
                     rv.setAdapter(adapter);
                 } else {
-                    Toast.makeText(Rated.this, "connection error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Rated.this, "connection error.You are not logged in. Please, log in !", Toast.LENGTH_SHORT).show();
                 }
             }
 

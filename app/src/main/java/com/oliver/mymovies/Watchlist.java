@@ -68,7 +68,7 @@ public class Watchlist extends AppCompatActivity {
                     rv.setAdapter(adapter);
                     Toast.makeText(Watchlist.this, "successful", Toast.LENGTH_SHORT).show();
                 } else {
-                    Toast.makeText(Watchlist.this, "connection error", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Watchlist.this, "connection error.You are not logged in. Please, log in !", Toast.LENGTH_SHORT).show();
                 }
             }
 
